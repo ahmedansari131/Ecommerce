@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/style.css' %}">
+
+</head>
+
+<body>
+    <!-- NAVBAR SECTION -->
+    <div class="main-container">
+
+
+    <div class="nav">
+        <div class="logo">
+            <a href="/shop">Cart<span style="font-weight: bold; color: #ED2939;">X</span></a>
+        </div>
+
+        <div class="search">
+            <input type="search" name="Search" class="search-input" placeholder="Search for products and many more">
+            <div class="btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 383.1 383.25">
+                    <g id="Layer_2" data-name="Layer 2">
+                        <g id="Layer_1-2" data-name="Layer 1">
+                            <path
+                                d="M144.32,0h20.21c.95.23,1.89.51,2.85.67,8.46,1.46,17.08,2.3,25.36,4.42,95.85,24.54,144,133.12,97.75,220.57-4.23,8-9.39,15.53-14.58,24a26,26,0,0,1,3.18,2.43q46.73,46.67,93.45,93.35c4.34,4.33,8.53,8.64,10.56,14.59v7.48c-1.65,4.61-3.67,8.94-7.82,12-8.11,5.91-18.19,4.82-26-3q-48.81-48.8-97.58-97.64a18.21,18.21,0,0,1-2.21-3.48c-2.31,1.73-3.6,2.69-4.92,3.61-41.44,28.91-86.7,37.24-135.06,22.59C32.88,278.34-11.82,203.5,2.74,124.77,13.76,65.15,61.79,16,121.12,3.69,128.78,2.11,136.58,1.21,144.32,0ZM270,154.44c.19-63.83-51.79-116-115.72-116.13C90.5,38.17,38.24,90.19,38.06,154S89.88,269.84,153.83,270.12C217.57,270.4,269.8,218.38,270,154.44Z" />
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <div class="nav-tab">
+            <ul class="nav-links">
+
+                <li class="product-category">
+                    <a href="product">Product</a>
+                </li>
+
+                <div class="dropdown-category">
+                    <li><a href="#">Fashion</a></li>
+                    <li><a href="#">Electronics</a></li>
+                    <li><a href="#">Mobiles</a></li>
+                    <li><a href="#">Grocery</a></li>
+                </div>
+
+            </ul>
+        </div>
+
+
+
+    </div>
+
+    {% block body %} {% endblock %}
+</div>
+</body>
+
+</html>

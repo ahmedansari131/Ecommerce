@@ -1,170 +1,299 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
 }
 
-.nav{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background-color: #101920;
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  /* background-color: #101920; */
+  position: relative;
 }
 
-.nav .logo a{
-    font-size: 2rem;
-    color: #f2f2f3;
-    font-family: "roboto", sans-serif;
+.nav .logo a {
+  font-size: 2rem;
+  color: #f2f2f3;
+  font-family: "roboto", sans-serif;
 }
 
-.nav .nav-links{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    list-style: none;
-    column-gap: 1.5em;
-    font-size: 1.3rem;
-    padding: 1em 0;
+.nav .nav-links {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  font-size: 1.3rem;
+  position: relative;
+  justify-content: center;
 }
 
-.nav .nav-links a{
-    padding: 1em .7em;
-    color: #f2f2f3;
-    font-family: "roboto", sans-serif;
-    transition: all .4s;
+.nav .nav-links a {
+  /* color: #f2f2f3; */
+  font-family: "roboto", sans-serif;
+  transition: all .4s;
 }
 
-.nav .nav-links a:hover{
-    background-color: #ED2939;
+.nav .nav-links .product-category a{
+  color: #f2f2f3;
 }
 
-.nav .search{
-    display: flex;
-    align-items: center;
-    column-gap: 1em;
+.dropdown-category{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  background-color: #f2f2f3;
+  transform: translate(-50%, 25%);
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  border-radius: 25px;
+  z-index: 2;
+  display: none;
+  text-align: center;
+  
 }
 
-.nav .search .search-input{
-    padding: .3em;
-    font-size: 1rem;
-    outline: none;
-    border: none;
-    font-family: "roboto", sans-serif;
+.nav .nav-links .product-category:hover + .dropdown-category,
+.dropdown-category:hover {
+  transition: all .1s;
+  display: block;
 }
 
-.btn-primary{
-    padding: .3em .7em;
-    cursor: pointer;
-    font-family: "roboto", sans-serif;
-    background-color: #f2f2f3;
-    border: none;
-    font-size: 1rem;
+.dropdown-category li{
+  border-bottom: 1px solid #ED2939;
 }
+
+.dropdown-category li a{
+  color: #101920;
+  cursor: pointer;
+  transition: all .1s;
+}
+
+.dropdown-category li a:hover{
+  color: black;
+}
+
+.dropdown-category li:last-child{
+  border-bottom: none;
+
+}
+
+.nav .nav-links li{
+  padding: 1em 1.2em;
+  cursor: pointer;
+}
+
+.nav .nav-links .product-category a{
+  padding: .5em 3em;
+  border-radius: 30px;
+
+}
+
+.nav .nav-links .product-category a:hover {
+  background-color: #ED2939;
+
+}
+
+.nav .search {
+  display: flex;
+  align-items: center;
+  column-gap: 1.2em;
+  position: relative;
+  /* background-color: #2ca813; */
+}
+
+.nav .search .search-input {
+  padding: .8em 1.3em;
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  font-family: "roboto", sans-serif;
+  border-radius: 50px;
+  width: 30vw;
+}
+
+.btn-primary {
+  position: absolute;
+  right: .2%;
+  cursor: pointer;
+  width: 2.8vw;
+  height: 2.8vw;
+  border-radius: 50%;
+  background-color: #ED2939;
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+
+.btn-primary svg {
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  transform: translate(50%, -50%);
+  fill: #f2f2f3;
+  width: 2.8vw;
+  height: 2.8vh;
+}
+
+.main-container{
+  position: relative;
+}
+
 
 /* Product Carousel */
 
-.product-carousel{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ED2939;
-    height: 100vh;
+ul.slides {
+  /* display: block; */
+  /* position: absolute; */
+  height: 91.4vh;
+  overflow-y: hidden;
+  /* list-style: none; */
 }
 
-#cCarousel {
-    position: relative;
-    max-width: 900px;
-    margin: auto;
-  }
-  
-  #cCarousel .arrow {
-    position: absolute;
-    top: 50%;
-    display: flex;
-    width: 45px;
-    height: 45px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    z-index: 1;
-    font-size: 26px;
-    color: white;
-    background: #00000072;
-    cursor: pointer;
-  }
-  
-  #cCarousel #prev {
-    left: -10%;
-  }
-  
-  #cCarousel #next {
-    right: -10%;
-  }
-  
-  #carousel-vp {
-    width: 770px;
-    height: 400px;
-    display: flex;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    margin: auto;
-  }
-  
-  @media (max-width: 770px) {
-    #carousel-vp {
-      width: 510px;
-    }
-  }
-  
-  @media (max-width: 510px) {
-    #carousel-vp {
-      width: 250px;
-    }
-  }
-  
-  #cCarousel #cCarousel-inner {
-    display: flex;
-    position: absolute;
-    transition: 0.3s ease-in-out;
-    gap: 50px;
-    left: 0px;
-  }
-  
-  .cCarousel-item {
-    width: 250px;
-    height: 365px;
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .cCarousel-item img {
-    width: 100%;
-    object-fit: cover;
-    min-height: 246px;
-    color: white;
-  }
-  
-  .cCarousel-item .infos {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    background: white;
-    color: black;
-  }
-  
-  .cCarousel-item .infos button {
-    background: #222;
-    padding: 10px 30px;
-    border-radius: 15px;
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
+.slides * {
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+ul.slides input {
+  display: none;
+}
+
+.slide-container {
+  display: block;
+}
+
+.slide-image {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  opacity: 0;
+  transition: all 0.7s ease-in-out;
+  z-index: -1;
+}
+
+.layer {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 3%, rgba(51, 51, 51, 1) 31%, rgba(255, 255, 255, 1) 100%);
+  mix-blend-mode: multiply;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.main-product {
+  position: absolute;
+  z-index: 10;
+  bottom: 20%;
+  left: 5%;
+  font-size: 2rem;
+  font-family: 'roboto', sans-serif;
+  color: #f2f2f3;
+  display: flex;
+  flex-direction: column;
+  row-gap: .5em;
+}
+
+.main-product-desc {
+  font-size: 1.3rem;
+  width: 40%;
+  letter-spacing: 1px;
+  color: #cacaca;
+}
+
+.slide-image img {
+  width: auto;
+  min-width: 100%;
+  height: 100%;
+}
+
+.carousel-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  font-size: 100px;
+  line-height: 600px;
+  color: #fff;
+}
+
+.carousel-controls label {
+  display: none;
+  position: absolute;
+  padding: 0 20px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  cursor: pointer;
+}
+
+.slide-image:hover+.carousel-controls label {
+  opacity: 0.5;
+}
+
+.carousel-controls label:hover {
+  opacity: 1;
+}
+
+.carousel-controls .prev-slide {
+  width: 49%;
+  text-align: left;
+  left: 0;
+}
+
+.carousel-controls .next-slide {
+  width: 49%;
+  text-align: right;
+  right: 0;
+}
+
+.carousel-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20px;
+  z-index: 999;
+  text-align: center;
+}
+
+.carousel-dots .carousel-dot {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #fff;
+  opacity: 0.5;
+  margin: 10px;
+}
+
+input:checked+.slide-container .slide-image {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 1s ease-in-out;
+}
+
+input:checked+.slide-container .carousel-controls label {
+  display: block;
+}
+
+input#img-1:checked~.carousel-dots label#img-dot-1,
+input#img-2:checked~.carousel-dots label#img-dot-2,
+input#img-3:checked~.carousel-dots label#img-dot-3,
+input#img-4:checked~.carousel-dots label#img-dot-4,
+input#img-5:checked~.carousel-dots label#img-dot-5,
+input#img-6:checked~.carousel-dots label#img-dot-6 {
+  opacity: 1;
+}
+
+input:checked+.slide-container .nav label {
+  display: block;
+}

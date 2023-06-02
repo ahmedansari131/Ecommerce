@@ -12,5 +12,5 @@ class Product(models.Model):
     product_image = models.ImageField(upload_to="shop/images", default="")
     pub_date = models.DateField()
 
-    def __Str__(self):
+    def __str__(self):
         return self.product_name

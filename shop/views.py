@@ -1,14 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Product
 
 
 # Create your views here.
 def index(request):
-    return render(request, 'shop/index.html')
+    products = Product.objects.all()
+    print(products)
+    params = {'products': products, 'range': range(1, len(products))}
+    return render(request, 'shop/index.html', params)
 
 
 def about_us(request):
-    return HttpResponse('We are at about')
+    return render(request, 'shop/about.html')
 
 
 def contact_us(request):
