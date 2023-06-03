@@ -11,26 +11,28 @@ def index(request):
     return render(request, 'shop/index.html', params)
 
 
-def about_us(request):
-    return render(request, 'shop/about.html')
-
 
 def contact_us(request):
     return HttpResponse('We are at contact')
 
-
 def tracking_status(request):
     return HttpResponse('We are at tracking')
-
-
-def product(request):
-    return HttpResponse('We are at product')
-
 
 def search(request):
     return HttpResponse('We are at search')
 
-
 def checkout(request):
     return HttpResponse('We are at checkout')
+
+def electronic(request):
+    return HttpResponse('We are at electronic')
+
+def fashion(request):
+    return HttpResponse('We are at fashion')
+
+def grocery(request):
+    return HttpResponse('We are at grocery')
+
+def mobile(request):
+    return HttpResponse('We are at mobile')
 
