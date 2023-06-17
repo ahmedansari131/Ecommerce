@@ -1,0 +1,25 @@
+{% extends 'shop/basic.html' %}
+{% block title %} {{category_heading}} - CartX {% endblock %}
+{% block body %}
+<div class="main-container">
+    <h2 class="category-heading">
+        {{category_heading}}
+    </h2>
+    <div class="product-category-container">
+        {% for item in products %}
+        <!-- <a href="/shop/single" class="product-category-link"> -->
+            <a href="{% url 'Product' %}?sub_category={{ item.sub_category }}" class="product-category-link">
+            <div class="category-cards">
+
+                <img src="/media/{{item.product_image}}" alt="Product Image">
+                <h3 class="product-category-title">{{item.sub_category}}</h3>
+                <p class="product-desc">
+                    {{item.category_desc}}
+                </p>
+            </div>
+        </a>
+        {% endfor %}
+        
+    </div>
+</div>
+{% endblock %}

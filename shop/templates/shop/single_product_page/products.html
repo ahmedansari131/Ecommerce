@@ -1,0 +1,97 @@
+{% extends 'shop/basic.html' %}
+{% block title %} Product - CartX {% endblock %}
+
+{% block head %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'shop/css/products.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'shop/css/category.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block body %}
+<div class="main-page-container">
+
+    <div class="sidebar">
+
+        <div class="sidebar-heading">
+            <h3>{{subcategory}}</h3>
+        </div>
+
+        {% for item, subitem in sub_item_dict.items %}
+        <div class="super-product-container" data-filter-dropdown>
+            <h4 class="item-name"> <i data-filter-button class="fa-solid fa-angle-down icon"></i>{{ item }}</h4>
+            <ul>
+                {% for value in subitem %}
+                <li><a href="{% url 'SubItem' %}?sub_category={{subcategory}}&sub_item={{ value }}">{{ value }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+
+
+
+
+    </div>
+
+    <div class="main-product-container">
+        {% for item in products %}
+        <div class="product-container">
+
+            <div class="product-image">
+                <img src="/media/{{item.product_image}}" alt="Product Image">
+            </div>
+
+            <div class="product-description">
+                <h2>{{item.product_name}}</h2>
+                <p>
+                    {{item.product_desc}}
+                </p>
+            </div>
+
+            <div class="product-price">
+                &#8377;{{item.price}}
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+
+
+    <script>
+
+        document.addEventListener("click", (e) => {
+            const isFilterButton = e.target.matches("[data-filter-button]");
+            const isDropdown = e.target.closest("[data-filter-dropdown]");
+            if (!isFilterButton && !isDropdown) {
+                document.querySelectorAll("[data-filter-dropdown].active").forEach((dropdown) => {
+                    const dropdownIcon = dropdown.querySelector("[data-filter-button]");
+                    dropdownIcon.classList.remove('rotate-icon');
+                    dropdown.classList.remove("active");
+                });
+                return;
+            }
+
+            let currentFilter;
+            if (isFilterButton || isDropdown) {
+                currentFilter = isFilterButton
+                    ? e.target.closest("[data-filter-dropdown]")
+                    : isDropdown;
+                const dropdownIcon = currentFilter.querySelector("[data-filter-button]");
+                dropdownIcon.classList.toggle('rotate-icon');
+                currentFilter.classList.toggle("active");
+            }
+
+            document.querySelectorAll("[data-filter-dropdown].active").forEach((dropdown) => {
+                if (dropdown == currentFilter) return;
+                const dropdownIcon = dropdown.querySelector("[data-filter-button]");
+                dropdownIcon.classList.remove('rotate-icon');
+                dropdown.classList.remove("active");
+            });
+        });
+
+    </script>
+    {% endblock %}

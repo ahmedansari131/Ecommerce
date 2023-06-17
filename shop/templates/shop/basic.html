@@ -7,16 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'shop/style.css' %}">
-
+    <link rel="stylesheet" type="text/css" href="{% static css_file_path %}">
+    {% block head %}
+    {% endblock %}
 </head>
+
 
 <body>
     <!-- NAVBAR SECTION -->
     <div class="main-container">
-
-
     <div class="nav">
+
         <div class="logo">
             <a href="/shop">Cart<span style="font-weight: bold; color: #ED2939;">X</span></a>
         </div>
@@ -27,15 +28,15 @@
         </div>
 
         <div class="action">
-            <div class="product-category-dropdown">
-                <button class="product-category action-btn">
+            <div class="product-category-dropdown" data-dropdown>
+                <button class="product-category action-btn" data-dropdown-button>
                     Product
                 </button>
                 <div class="dropdown-menu">
 
-                    <div class="category-list">
+                    <div class="category-list" >
                         <h4>
-                           <a href="electronic">Electronic</a> 
+                           <a class="btn-clicked" href="/shop/electronic" >Electronic</a> 
                         </h4>
                         <li><a href="#">Refrigerator</a></li>
                         <li><a href="#">Television</a></li>
@@ -46,7 +47,7 @@
                     
                     <div class="category-list">
                         <h4>
-                            Mobile
+                            <a class="btn-clicked" href="/shop/mobile" >Mobile</a>
                         </h4>
                         <li><a href="#">Iphone 14 pro</a></li>
                         <li><a href="#">Samsung Galaxy Note 12</a></li>
@@ -57,18 +58,18 @@
                     
                     <div class="category-list">
                         <h4>
-                            Fashion
+                            <a class="btn-clicked" href="/shop/fashion" >Fashion</a>
                         </h4>
                         <li><a href="#">Women's Clothing</a></li>
                         <li><a href="#">Men's Clothing</a></li>
                         <li><a href="#">Kids' Clothing</a></li>
-                        <li><a href="#">Footwear</a></li>
+                        <li><a href="#">Bags & Suitcase</a></li>
                         <li><a href="#">Accessories</a></li>
                     </div>
 
                     <div class="category-list">
                         <h4>
-                            Grocery
+                            <a class="btn-clicked" href="/shop/grocery" >Grocery</a>
                         </h4>
                         <li><a href="#">Fruits and Vegetables</a></li>
                         <li><a href="#">Dairy and Eggs</a></li>
@@ -93,12 +94,12 @@
             </div>
         </div>
 
-
-
     </div>
 
     {% block body %} {% endblock %}
 </div>
+
+<script src="{% static 'shop/js/script.js' %}"></script>
 </body>
 
 </html>
