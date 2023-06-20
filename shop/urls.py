@@ -12,6 +12,7 @@ urlpatterns = [
     path("fashion/", views.fashion, name="Fashion"  ),
     path("grocery/", views.grocery, name="Grocery"),
     path("mobile/", views.mobile, name="Mobile"),
-    path("single/", views.sub_category_wise_product, name="Product"),
+    path("subcategory/", views.sub_category_wise_product, name="Subcategory"),
     path("subitem/", views.sub_item_wise_product, name="SubItem"),
+    path("product/", views.single_product, name="Product"),
 ]

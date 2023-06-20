@@ -8,7 +8,7 @@
     <div class="product-category-container">
         {% for item in products %}
         <!-- <a href="/shop/single" class="product-category-link"> -->
-            <a href="{% url 'Product' %}?sub_category={{ item.sub_category }}" class="product-category-link">
+            <a href="{% url 'Subcategory' %}?sub_category={{ item.sub_category }}" class="product-category-link">
             <div class="category-cards">
 
                 <img src="/media/{{item.product_image}}" alt="Product Image">

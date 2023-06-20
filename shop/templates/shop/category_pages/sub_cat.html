@@ -15,7 +15,6 @@
 <div class="main-page-container">
 
     <div class="sidebar">
-
         <div class="sidebar-heading">
             <h3>{{subcategory}}</h3>
         </div>
@@ -30,32 +29,31 @@
             </ul>
         </div>
         {% endfor %}
-
-
-
-
     </div>
 
     <div class="main-product-container">
         {% for item in products %}
-        <div class="product-container">
+        <!-- <a href="/shop/product"> -->
+        <a href="{% url 'Product' %}?product_id='{{ item.id }}'">
+            <div class="product-container">
 
-            <div class="product-image">
-                <img src="/media/{{item.product_image}}" alt="Product Image">
+                <div class="product-image">
+                    <img src="/media/{{item.product_image}}" alt="Product Image">
+                </div>
+
+                <div class="product-description">
+
+                    <h2>{{item.product_name}}</h2>
+                    <p>
+                        {{item.product_desc}}
+                    </p>
+                    <div class="product-price">
+                        &#8377;{{item.discounted_price}}
+                    </div>
+                </div>
+
             </div>
-
-            <div class="product-description">
-                <h2>{{item.product_name}}</h2>
-                <p>
-                    {{item.product_desc}}
-                </p>
-            </div>
-
-            <div class="product-price">
-                &#8377;{{item.price}}
-            </div>
-
-        </div>
+        </a>
         {% endfor %}
     </div>
 

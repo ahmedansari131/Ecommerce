@@ -1,0 +1,188 @@
+{% extends 'shop/basic.html' %}
+{% block title %} {{product_dict.product_name}} - CartX {% endblock %}
+
+{% block head %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'shop/css/category.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'shop/css/single_product.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block body %}
+
+<div class="main-page-container">
+    <div class="main-product-container">
+
+        <div class="product-actions">
+
+            <img class="product-img" src="/media/{{product_dict.product_image}}" alt="Product Image">
+
+            <div class="product-btn">
+                <button id="add-to-cart">Add to Cart</button>
+                <button id="buy">Buy Now</button>
+            </div>
+
+        </div>
+
+        <div class="product-details">
+
+            <h3 class="product-title">{{product_dict.product_name}}</h3>
+
+            <div class="product-rating">
+                <p>4.2</p><i class="fa-solid fa-star"></i>
+            </div>
+
+            <p class="product-price">
+                &#8377;{{product_dict.discounted_price}} <span class="og-price">&#8377;{{product_dict.og_price}}</span>
+                <span class="discount-no">{{product_dict.discount_percent}}% off</span>
+            </p>
+
+            {% if product_dict.product_expired and product_dict.product_manufactured %}
+            <div class="product-scalability">
+                <img src="https://rukminim1.flixcart.com/www/32/32/promos/25/06/2018/5f5e0f11-380c-4f0e-be13-b7763474b66b.png?q=90"
+                    alt="">
+                <div class="date">
+                    <p class="expiry">Expiry Date {{product_dict.product_expiry}}</p>
+                    <p class="manufacture">Manufactured Date {{product_dict.product_manufactured}}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="delivery-input flex" style="align-items: center;">
+                <label class="side-heading" for="Delivery">Delivery</label>
+                <form>
+                    <div class="border-bottom">
+                        <input type="text" placeholder="Enter Delivery Pincode">
+                        <button class="pincode-check-btn">Check</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="product-quantity flex">
+                <label class="side-heading" for="Quantity">Quantity</label>
+                <p class="quantity">
+                    5x100 g
+                </p>
+            </div>
+
+            {% if product_dict.highlights %}
+            <div class="highlights flex">
+                <label class="side-heading" for="Highlights">Highlights</label>
+                <ul class="font-color font-size">
+                    {% for item in product_dict.highlights %}
+                    <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+
+            {% if product_dict.product_seller %}
+            <div class="seller flex">
+                <label class="side-heading" for="Seller">Seller</label>
+                <p class="seller-name font-size">
+                    {{product_dict.product_seller}}
+                </p>
+            </div>
+            {% endif %}
+
+            {% if product_dict.product_desc %}
+            <div class="description flex">
+                <label class="side-heading" for="Discription">Description</label>
+                <p class="desc-para font-color font-size">
+                    {{product_dict.product_desc}}
+                </p>
+            </div>
+            {% endif %}
+
+            <div class="review-section">
+                <div class="rating-container">
+                    <div class="rating-header">
+                        <h3>Rating & Reviews</h3>
+                        <button class="rate-product-btn">Rate Product</button>
+                    </div>
+
+                    <div class="rating-display-section">
+
+                        <div class="rating-no font-size">
+                            <div class="product-rated">
+                                4.4 <i class="fa-solid fa-star"></i>
+                            </div>
+                            <span>1,741 Ratings & 150 Reviews</span>
+                        </div>
+
+                        <div class="rating-graphics-section">
+
+                            <span id="5">5<i class="fa-solid fa-star"></i>
+                                <div class="rating-graphic"></div>
+                            </span>
+                            <span id="4">4<i class="fa-solid fa-star"></i>
+                                <div class="rating-graphic"></div>
+                            </span>
+                            <span id="3">3<i class="fa-solid fa-star"></i>
+                                <div class="rating-graphic"></div>
+                            </span>
+                            <span id="2">2<i class="fa-solid fa-star"></i>
+                                <div class="rating-graphic"></div>
+                            </span>
+                            <span id="1">1<i class="fa-solid fa-star"></i>
+                                <div class="rating-graphic"></div>
+                            </span>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="review-container">
+
+                    <div class="review-heading">
+
+                        <div class="product-rating user-rating">
+                            <p>4.2</p><i class="fa-solid fa-star"></i>
+                        </div>
+                        <h5>Super!</h5>
+
+                    </div>
+
+                    <div class="review-desc font-size font-color">
+
+                        <p>Today we open the Britannia milk bikis both the packets where broken and it is broken into
+                            pieces. Outside packing is good but inside it is with broken biscuits</p>
+
+                    </div>
+
+                    <div class="review-username">
+
+                        Ravindran K
+                        <svg width="14" height="14" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg"
+                            class="_2a1p_T">
+                            <g>
+                                <circle cx="6" cy="6" r="6" fill="#878787"></circle>
+                                <path stroke="#FFF" stroke-width="1.5" d="M3 6l2 2 4-4" fill="#878787"></path>
+                            </g>
+                        </svg>
+                        <span>Certified Buyer, Chennai Mar, 2019</span>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
