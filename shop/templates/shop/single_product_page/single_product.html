@@ -22,7 +22,7 @@
             <img class="product-img" src="/media/{{product_dict.product_image}}" alt="Product Image">
 
             <div class="product-btn">
-                <button id="add-to-cart">Add to Cart</button>
+                <button id='{{product_dict.id}}' class="add-to-cart">Add to Cart</button>
                 <button id="buy">Buy Now</button>
             </div>
 
@@ -176,13 +176,7 @@
 
 </div>
 
-
-
-
-
-
-
-
+<script src="{% static '/shop/js/single_product.js' %}" type="module"></script>
 
 
 {% endblock %}

@@ -15,4 +15,8 @@ urlpatterns = [
     path("subcategory/", views.sub_category_wise_product, name="Subcategory"),
     path("subitem/", views.sub_item_wise_product, name="SubItem"),
     path("product/", views.single_product, name="Product"),
+    path("cart/", views.cart, name="Cart"),
+    path("<int:prod_id>/", views.cart_url, name="CartUrl"),
+    path("<int:prod_id>/<str:rem>/", views.cart_url, name="CartUrlRem"),
+    path("registration/", views.registration, name="Registration"),
 ]

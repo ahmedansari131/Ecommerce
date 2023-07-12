@@ -2,7 +2,7 @@ import html
 from urllib.parse import quote, unquote
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from .models import Product, Display_Product
+from .models import Product, Display_Product, CartItem
 
 
 # Create your views here.
@@ -98,6 +98,10 @@ def sub_category_wise_product(request):
             value = ["".join(value)]
             sub_item_dict[key] = value
 
+    print("This is products", matching_products)
+    print("This is subitem", sub_item_dict)
+    print(len(sub_item_dict))
+
     params = {
         "products": matching_products,
         "css_file_path": css_file_path,
@@ -136,43 +140,78 @@ def sub_item_wise_product(request):
         "products": sub_item_name,
         "sub_item_dict": sub_item_dict,
         "subcategory": sub_category,
-        "subitem": sub_item
+        "subitem": sub_item,
     }
     return render(request, "shop/category_pages/sub_item.html", params)
 
 
 def single_product(request):
     product_dict = {}
-    product_highlight = {}
     raw_product_id = request.GET.get("product_id")
     product_id = raw_product_id.strip("'")
-    # print(r"This is product id", product_id)
 
-    product_object = Product.objects.filter(id = product_id)
-    # print("This is product", product_object)
+    product_object = Product.objects.filter(id=product_id)
 
     product_queryset = product_object.values()
     product = list(product_queryset)
 
     for dictionary in product:
         product_dict.update(dictionary)
-        product_dict['discount_percent'] = int(((product_dict['og_price'] - product_dict['discounted_price'])/product_dict['og_price'])*100)
+        product_dict["discount_percent"] = int(
+            (
+                (product_dict["og_price"] - product_dict["discounted_price"])
+                / product_dict["og_price"]
+            )
+            * 100
+        )
 
-        if product_dict['highlights']:
-            item = product_dict['highlights'].replace("|", ",")
+        if product_dict["highlights"]:
+            item = product_dict["highlights"].replace("|", ",")
             item = item.split(" , ")
-            product_dict['highlights'] = item
-            print(item)
-
-    print("This is product dictionary",product_dict)
-
-    params = {'product_dict': product_dict}
-
-
-
-
-
+            product_dict["highlights"] = item
+    params = {"product_dict": product_dict}
     return render(request, "shop/single_product_page/single_product.html", params)
+
+
+def cart(request):
+    product = []
+    total_price = 0
+    added_product = CartItem.objects.all()
+    added_product_id = added_product.values_list('added_product_id', flat=True)
+
+    for product_id in added_product_id:
+        filtered_product = Product.objects.filter(id = product_id)
+        product_price = filtered_product.values_list('discounted_price', flat=True)
+
+        print(product_price)
+
+        product.extend(filtered_product)
+
+    params = {'products': product}
+    return render(request, "shop/cart.html", params)
+
+
+def cart_url(request, prod_id, rem = None):
+
+    if request.method == "GET" and rem == None:
+        product = Product.objects.filter(id = prod_id)
+        product_id = product.values_list('id', flat=True).first()
+        cart_item = CartItem(added_product_id = product_id  )
+        cart_item.save()
+        return JsonResponse({'message': "Product added to cart"})
+
+    elif request.method == "GET" and rem:
+        product = Product.objects.filter(id = prod_id)
+        product_id = product.values_list('id', flat=True).first()
+        cart_item = CartItem(added_product_id = product_id  )
+        cart_item.delete()
+        print("Deleting item")
+        return JsonResponse({'message': "Product removed"})
+
+
+def registration(request):
+    return render(request, "shop/registration.html")
+
 
 
 

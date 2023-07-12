@@ -12,10 +12,10 @@
 {% block body %}
 <div class="main-page-container">
 
-    <div class="sidebar">
+    <div class="sidebar" style="margin-right: 0;">
 
         <div class="sidebar-heading">
-            <h3>{{subcategory}}</h3>
+            <h3>{{subcategory}} | <span>{{subitem}}</span></h3>
         </div>
 
         {% for item, subitem in sub_item_dict.items %}
@@ -31,33 +31,41 @@
 
     </div>
 
-    <h2>{{subitem}}</h2>
+    <!-- <h2>{{subitem}}</h2> -->
     <div class="main-product-container">
 
         {% for item in products %}
-        <div class="product-container">
+        <a href="{% url 'Product' %}?product_id='{{ item.id }}'">
+            <div class="product-container">
 
-            <div class="product-image">
-                <img src="/media/{{item.product_image}}" alt="Product Image">
+                <div class="product-image">
+                    <img src="/media/{{item.product_image}}" alt="Product Image">
+                </div>
+
+                <div class="product-description">
+
+                    <h2>{{item.product_name}}</h2>
+                    {% if item.product_expiry and item.product_manufactured %}
+                    <p>
+                        Expiry Date <span>{{item.product_expiry}}</span><br>
+                    </p>
+                    <p>
+                        Manufactured Date <span>{{item.product_manufactured}}</span>
+                    </p>
+                    {% endif %}
+                </div>
+
+                <div class="product-price">
+                    <span>&#8377;{{item.discounted_price}}<br></span>
+                    <span>&#8377;{{item.og_price}}</span>
+                    <span>{{item.discount_percent}}</span>
+                </div>
             </div>
-
-            <div class="product-description">
-                <h2>{{item.product_name}}</h2>
-                <p>
-                    {{item.product_desc}}
-                </p>
-            </div>
-
-            <div class="product-price">
-                &#8377;{{item.price}}
-            </div>
-
-        </div>
+        </a>
         {% endfor %}
     </div>
 
     <script>
-
         document.addEventListener("click", (e) => {
             const isFilterButton = e.target.matches("[data-filter-button]");
             const isDropdown = e.target.closest("[data-filter-dropdown]");
@@ -87,6 +95,5 @@
                 dropdown.classList.remove("active");
             });
         });
-
     </script>
     {% endblock %}

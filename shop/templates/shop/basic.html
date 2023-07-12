@@ -7,7 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="{% static css_file_path %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/cart.css' %}">
     {% block head %}
     {% endblock %}
 </head>
@@ -16,90 +20,97 @@
 <body>
     <!-- NAVBAR SECTION -->
     <div class="main-container">
-    <div class="nav">
+        <div class="nav">
 
-        <div class="logo">
-            <a href="/shop">Cart<span style="font-weight: bold; color: #ED2939;">X</span></a>
-        </div>
+            <div class="logo">
+                <a href="/shop">Cart<span style="font-weight: bold; color: #ED2939;">X</span></a>
+            </div>
 
-        <div class="search-box">
-            <input type="text" name="Search" class="search-input" placeholder="Search for products and many more">
-            <button type="submit" class="search-btn">Search</button>
-        </div>
+            <div class="search-box">
+                <input type="text" name="Search" class="search-input" placeholder="Search for products and many more">
+                <button type="submit" class="search-btn">Search</button>
+            </div>
 
-        <div class="action">
-            <div class="product-category-dropdown" data-dropdown>
-                <button class="product-category action-btn" data-dropdown-button>
-                    Product
-                </button>
-                <div class="dropdown-menu">
+            <div class="action">
+                <div class="product-category-dropdown" data-dropdown>
+                    <button class="product-category action-btn" data-dropdown-button>
+                        Product
+                    </button>
+                    <div class="dropdown-menu">
 
-                    <div class="category-list" >
-                        <h4>
-                           <a class="btn-clicked" href="/shop/electronic" >Electronic</a> 
-                        </h4>
-                        <li><a href="#">Refrigerator</a></li>
-                        <li><a href="#">Television</a></li>
-                        <li><a href="#">Washing Machine</a></li>
-                        <li><a href="#">Microwave Oven</a></li>
-                        <li><a href="#">Mixer</a></li>
+                        <div class="category-list">
+                            <h4>
+                                <a class="btn-clicked" href="/shop/electronic">Electronic</a>
+                            </h4>
+                            <li><a href="#">Refrigerator</a></li>
+                            <li><a href="#">Television</a></li>
+                            <li><a href="#">Washing Machine</a></li>
+                            <li><a href="#">Microwave Oven</a></li>
+                            <li><a href="#">Mixer</a></li>
+                        </div>
+
+                        <div class="category-list">
+                            <h4>
+                                <a class="btn-clicked" href="/shop/mobile">Mobile</a>
+                            </h4>
+                            <li><a href="#">Iphone 14 pro</a></li>
+                            <li><a href="#">Samsung Galaxy Note 12</a></li>
+                            <li><a href="#">Redmi Note 15</a></li>
+                            <li><a href="#">Poco X5 Pro 5g</a></li>
+                            <li><a href="#">Samsung Galaxy Fold 10</a></li>
+                        </div>
+
+                        <div class="category-list">
+                            <h4>
+                                <a class="btn-clicked" href="/shop/fashion">Fashion</a>
+                            </h4>
+                            <li><a href="#">Women's Clothing</a></li>
+                            <li><a href="#">Men's Clothing</a></li>
+                            <li><a href="#">Kids' Clothing</a></li>
+                            <li><a href="#">Bags & Suitcase</a></li>
+                            <li><a href="#">Accessories</a></li>
+                        </div>
+
+                        <div class="category-list">
+                            <h4>
+                                <a class="btn-clicked" href="/shop/grocery">Grocery</a>
+                            </h4>
+                            <li><a href="#">Fruits and Vegetables</a></li>
+                            <li><a href="#">Dairy and Eggs</a></li>
+                            <li><a href="#">Grains and Baked Goods</a></li>
+                            <li><a href="#">Beverages</a></li>
+                            <li><a href="#">Snacks</a></li>
+                        </div>
+
                     </div>
-                    
-                    <div class="category-list">
-                        <h4>
-                            <a class="btn-clicked" href="/shop/mobile" >Mobile</a>
-                        </h4>
-                        <li><a href="#">Iphone 14 pro</a></li>
-                        <li><a href="#">Samsung Galaxy Note 12</a></li>
-                        <li><a href="#">Redmi Note 15</a></li>
-                        <li><a href="#">Poco X5 Pro 5g</a></li>
-                        <li><a href="#">Samsung Galaxy Fold 10</a></li>
-                    </div>
-                    
-                    <div class="category-list">
-                        <h4>
-                            <a class="btn-clicked" href="/shop/fashion" >Fashion</a>
-                        </h4>
-                        <li><a href="#">Women's Clothing</a></li>
-                        <li><a href="#">Men's Clothing</a></li>
-                        <li><a href="#">Kids' Clothing</a></li>
-                        <li><a href="#">Bags & Suitcase</a></li>
-                        <li><a href="#">Accessories</a></li>
-                    </div>
+                </div>
 
-                    <div class="category-list">
-                        <h4>
-                            <a class="btn-clicked" href="/shop/grocery" >Grocery</a>
-                        </h4>
-                        <li><a href="#">Fruits and Vegetables</a></li>
-                        <li><a href="#">Dairy and Eggs</a></li>
-                        <li><a href="#">Grains and Baked Goods</a></li>
-                        <li><a href="#">Beverages</a></li>
-                        <li><a href="#">Snacks</a></li>
-                    </div>
+                <div class="registration">
+                    <button class="login-btn action-btn">
+                        <a href="/shop/registration">Login</a>
+                    </button>
+                </div>
 
+                <div class="add-to-cart">
+                    <a href="/shop/cart">
+                        <button class="cart-btn action-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cart-rec">Cart</span>
+                        </button>
+                    </a>
                 </div>
             </div>
 
-            <div class="registration">
-                <button class="login-btn action-btn">
-                   <a href="#">Login</a> 
-                </button>
-            </div>
-
-            <div class="add-to-cart">
-                <button class="cart-btn action-btn">
-                    Icon
-                </button>
-            </div>
         </div>
 
+       
+
+        {% block body %} {% endblock %}
     </div>
 
-    {% block body %} {% endblock %}
-</div>
+    <!-- <script src="{% static 'shop/js/single_product.js' %}"></script> -->
+    <script src="{% static 'shop/js/script.js' %}"></script>
 
-<script src="{% static 'shop/js/script.js' %}"></script>
 </body>
 
 </html>

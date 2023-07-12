@@ -1,0 +1,87 @@
+{% extends 'shop/basic.html' %}
+{% block title %} Shopping Cart | CartX {% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'shop/css/category.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'shop/css/cart.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block body %}
+
+<div class="cart-container" id="cart-container">
+
+    <div class="cart-product-container">
+        {% for value in products %}
+        <div class="cart-product-det">
+            <img src="/media/{{value.product_image}}" alt="Product image">
+
+            <div class="product-action">
+
+                <p>{{value.product_name}}</p>
+
+                <div class="product-quantity-btn">
+
+                    <div class="quantity-counter operation-subtract" id="{{value.id}}"><i class="fa-solid fa-minus"></i>
+                    </div>
+
+                    <div class="quantity-counter quantity"></div>
+
+                    <div class="quantity-counter operation-add" id="{{value.id}}"><i class="fa-solid fa-plus add"></i>
+                    </div>
+
+                </div>
+
+                <div class="cart-btn">
+                    <button class="action-btn remove-item-btn" id="{{value.id}}">Remove Item</button>
+                    <button class="action-btn buy-item-btn">Save for Later</button>
+                </div>
+
+            </div>
+
+            <div class="product-price">
+                <p class="discounted-price">
+                {{value.discounted_price}}
+                </p>
+
+                <p class="og-price" style="text-decoration:line-through;">
+                    {{value.og_price}}  
+                </p>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="cart-price-container">
+        <h4>
+            Price Details
+        </h4>
+
+        <ul class="pricing-breakdowns">
+
+            <li>Price (1 item)
+                <span class="price">Hello</span>
+            </li>
+            <li>Discount
+                <span class="discount-price">Hello</span>
+            </li>
+            <li>Delivery Charges
+                <span>Free</span>
+            </li>
+
+        </ul>
+
+        <h4 class="final-amount">
+            Total Amount <span class="total-amount">12,333</span>
+        </h4>
+    </div>
+
+</div>
+
+<script src="{% static '/shop/js/cart.js' %}" type="module"></script>
+
+{% endblock %}

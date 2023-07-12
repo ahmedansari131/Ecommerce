@@ -9,7 +9,7 @@ class Product(models.Model):
     sub_category = models.CharField(max_length=50, default="")
     item = models.CharField(max_length=100, default="", null=True, blank=True)
     sub_item = models.CharField(max_length=100, default="", null=True, blank=True)
-    product_desc = models.CharField(max_length=500)
+    product_desc = models.CharField(max_length=500, default="", null=True, blank=True)
     discounted_price = models.IntegerField(default=0)
     og_price = models.IntegerField(default=0)
     discount_percent = models.IntegerField(default=0, null=True, blank=True)
@@ -31,3 +31,6 @@ class Display_Product(models.Model):
 
     def __str__(self):
         return self.sub_category
+    
+class CartItem(models.Model):
+    added_product_id = models.IntegerField(primary_key=True,blank=True, default=0)

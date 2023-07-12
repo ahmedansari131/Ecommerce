@@ -58,7 +58,7 @@
     background-color: white;
 }
 
-.product-actions .product-btn #add-to-cart {
+.product-actions .product-btn .add-to-cart {
     background: linear-gradient(336deg, rgb(220, 43, 57) 12%, rgb(175, 3, 3) 95%);
 }
 

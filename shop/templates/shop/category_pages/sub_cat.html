@@ -14,12 +14,14 @@
 {% block body %}
 <div class="main-page-container">
 
-    <div class="sidebar">
+    {% if sub_item_dict.items|length > 1 %}
+    <div class="sidebar" style="margin-right: 0;">
         <div class="sidebar-heading">
-            <h3>{{subcategory}}</h3>
+            <h3>{{subcategory}} | <span>All Items</span></h3>
         </div>
 
         {% for item, subitem in sub_item_dict.items %}
+        {% if item and subitem %}
         <div class="super-product-container" data-filter-dropdown>
             <h4 class="item-name"> <i data-filter-button class="fa-solid fa-angle-down icon"></i>{{ item }}</h4>
             <ul>
@@ -28,8 +30,11 @@
                 {% endfor %}
             </ul>
         </div>
+        {% endif %}
         {% endfor %}
     </div>
+    {% endif %}
+
 
     <div class="main-product-container">
         {% for item in products %}
@@ -44,23 +49,31 @@
                 <div class="product-description">
 
                     <h2>{{item.product_name}}</h2>
+                    {% if item.product_expiry and item.product_manufactured %}
                     <p>
-                        {{item.product_desc}}
+                        Expiry Date <span>{{item.product_expiry}}</span><br>
                     </p>
-                    <div class="product-price">
-                        &#8377;{{item.discounted_price}}
-                    </div>
+                    <p>
+                        Manufactured Date <span>{{item.product_manufactured}}</span>
+                    </p>
+                    {% endif %}
                 </div>
 
+                <div class="product-price">
+                    <span>&#8377;{{item.discounted_price}}<br></span>
+                    <span>&#8377;{{item.og_price}}</span>
+                    <span>{{item.discount_percent}}</span>
+                </div>
             </div>
         </a>
         {% endfor %}
     </div>
 
 
-
+    
+    
     <script>
-
+        
         document.addEventListener("click", (e) => {
             const isFilterButton = e.target.matches("[data-filter-button]");
             const isDropdown = e.target.closest("[data-filter-dropdown]");
@@ -76,13 +89,13 @@
             let currentFilter;
             if (isFilterButton || isDropdown) {
                 currentFilter = isFilterButton
-                    ? e.target.closest("[data-filter-dropdown]")
-                    : isDropdown;
+                ? e.target.closest("[data-filter-dropdown]")
+                : isDropdown;
                 const dropdownIcon = currentFilter.querySelector("[data-filter-button]");
                 dropdownIcon.classList.toggle('rotate-icon');
                 currentFilter.classList.toggle("active");
             }
-
+            
             document.querySelectorAll("[data-filter-dropdown].active").forEach((dropdown) => {
                 if (dropdown == currentFilter) return;
                 const dropdownIcon = dropdown.querySelector("[data-filter-button]");
@@ -90,6 +103,6 @@
                 dropdown.classList.remove("active");
             });
         });
-
-    </script>
+        
+        </script>
     {% endblock %}

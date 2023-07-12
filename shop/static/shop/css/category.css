@@ -15,10 +15,11 @@ body {
     align-items: center;
     justify-content: space-around;
     padding: 1em;
-    top: 0;
-    z-index: 1;
+    z-index: 2;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    position: sticky;
+    transition: all 1s ease-in-out;
 }
 
 .nav .logo a {
@@ -80,6 +81,23 @@ body {
     font-family: 'roboto', sans-serif;
 }
 
+.nav .cart-btn{
+    /* padding: .5em; */
+    /* background: linear-gradient(336deg, rgb(220, 43, 57) 12%, rgb(175, 3, 3) 95%);; */
+    background-color: transparent;
+    border: 1px solid rgb(220, 43, 57);
+    color: rgb(220, 43, 57);
+    display: flex;
+    font-size: 1.4rem;
+    align-items: center;
+    column-gap: .5em;
+}
+
+.nav .cart-btn span{
+    font-size: 1rem;
+    font-weight: 500;
+}
+
 .product-category-dropdown {
     position: relative;
 }
@@ -103,7 +121,7 @@ body {
     pointer-events: none;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
     border: 1px solid rgba(130, 130, 130, .3);
-    /* display: none; */
+    z-index: 2000;
 }
 
 .product-category.action-btn {

@@ -24,7 +24,7 @@
   font-family: "roboto", sans-serif;
 }
 
-.search-box{
+.search-box {
   display: flex;
   align-items: center;
   width: 35%;
@@ -35,7 +35,7 @@
   border-radius: 50px;
 }
 
-.search-box input{
+.search-box input {
   flex: 1;
   border: none;
   outline: none;
@@ -46,7 +46,7 @@
   height: 40px;
 }
 
-.search-btn{
+.search-btn {
   padding: .5em 1em .5em 1em;
   font-size: 1.2rem;
   border-top-right-radius: 20px;
@@ -61,26 +61,33 @@
   border-left: none;
 }
 
-.nav .action{
+.nav .action {
   display: flex;
   column-gap: 2em;
 }
 
-.nav .action-btn{
+.action-btn{
   padding: .5em 1.5em;
   font-size: 1.2rem;
-  border-radius: 20px;
+  border-radius: 25px;
   border: none;
   outline: none;
   cursor: pointer;
   font-family: 'roboto', sans-serif;
+  background: linear-gradient(336deg, rgb(220, 43, 57) 12%, rgb(175, 3, 3) 95%);
+  color: #f2f2f3;
+  border: 1px solid rgb(255, 72, 72);
 }
 
-.product-category-dropdown{
+.action-btn a{
+  color: white;
+}
+
+.product-category-dropdown {
   position: relative;
 }
 
-.dropdown-menu{
+.dropdown-menu {
   position: absolute;
   right: 0;
   top: calc(100% + .25rem);
@@ -97,12 +104,7 @@
   transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
   opacity: 0;
   pointer-events: none;
-}
-
-.product-category.action-btn {
-  background: linear-gradient(336deg, rgb(220, 43, 57) 12%, rgb(175, 3, 3) 95%);
-  color: #f2f2f3;
-  border: 1px solid rgb(255, 72, 72);
+  z-index: 2;
 }
 
 .product-category.action-btn:hover,
@@ -110,43 +112,42 @@
   background: rgb(175, 3, 3);
 }
 
-.product-category-dropdown.active > .product-category{
+.product-category-dropdown.active>.product-category {
   background: rgb(178, 37, 37);
-
 }
 
-.dropdown-menu h4{
+.dropdown-menu h4 {
   margin-bottom: .5em;
   font-size: 1.1rem;
 }
 
-.dropdown-menu h4 a:hover{
+.dropdown-menu h4 a:hover {
   color: rgb(178, 37, 37);
 }
 
-.dropdown-menu .category-list a{
+.dropdown-menu .category-list a {
   color: black;
 }
 
-.dropdown-menu .category-list li{
+.dropdown-menu .category-list li {
   width: 100%;
   padding: .3em 0 .3em 0;
 }
 
-.dropdown-menu .category-list li:last-child{
+.dropdown-menu .category-list li:last-child {
   padding-bottom: 0;
 }
 
-.dropdown-menu .category-list li a{
+.dropdown-menu .category-list li a {
   color: rgb(52, 52, 52);
 }
 
-.dropdown-menu .category-list li a:hover{
+.dropdown-menu .category-list li a:hover {
   text-decoration: underline;
   color: rgb(0, 0, 0);
 }
 
-.product-category-dropdown.active > .product-category + .dropdown-menu{
+.product-category-dropdown.active>.product-category+.dropdown-menu {
   opacity: 1;
   transform: translateY(0px);
   pointer-events: auto;
@@ -182,12 +183,12 @@ ul.slides {
 }
 
 ul.slides input {
-  display: none; 
+  display: none;
 }
 
 
-.slide-container { 
-  display: block; 
+.slide-container {
+  display: block;
 }
 
 .slide-image {
@@ -198,7 +199,7 @@ ul.slides input {
   top: 0;
   opacity: 0;
   transition: all .7s ease-in-out;
-}   
+}
 
 .slide-image img {
   width: auto;
@@ -227,7 +228,7 @@ ul.slides input {
   z-index: 12;
 }
 
-.slide-image:hover + .carousel-controls label{
+.slide-image:hover+.carousel-controls label {
   opacity: 0.5;
 }
 
@@ -266,27 +267,29 @@ ul.slides input {
   margin: 10px;
 }
 
-input:checked + .slide-container .slide-image {
+input:checked+.slide-container .slide-image {
   opacity: 1;
   transform: scale(1);
   transition: opacity 1s ease-in-out;
 }
 
-input:checked + .slide-container .carousel-controls label {
-   display: block; 
+input:checked+.slide-container .carousel-controls label {
+  display: block;
 }
 
-input#img-1:checked ~ .carousel-dots label#img-dot-1,
-input#img-2:checked ~ .carousel-dots label#img-dot-2,
-input#img-3:checked ~ .carousel-dots label#img-dot-3,
-input#img-4:checked ~ .carousel-dots label#img-dot-4,
-input#img-5:checked ~ .carousel-dots label#img-dot-5,
-input#img-6:checked ~ .carousel-dots label#img-dot-6 {
-opacity: 1;
+input#img-1:checked~.carousel-dots label#img-dot-1,
+input#img-2:checked~.carousel-dots label#img-dot-2,
+input#img-3:checked~.carousel-dots label#img-dot-3,
+input#img-4:checked~.carousel-dots label#img-dot-4,
+input#img-5:checked~.carousel-dots label#img-dot-5,
+input#img-6:checked~.carousel-dots label#img-dot-6 {
+  opacity: 1;
 }
 
 
-input:checked + .slide-container .nav label { display: block; }
+input:checked+.slide-container .nav label {
+  display: block;
+}
 
 .layer {
   width: 100%;
@@ -317,3 +320,4 @@ input:checked + .slide-container .nav label { display: block; }
   letter-spacing: 1px;
   color: #cacaca;
 }
+
