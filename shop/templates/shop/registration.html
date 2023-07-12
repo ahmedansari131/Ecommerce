@@ -1,0 +1,63 @@
+{% extends 'shop/basic.html' %}
+{% block title %} Registration | CartX {% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'shop/css/category.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'shop/css/registration.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <div class="registration-container">
+
+        <div class="side-info">
+            <h2>Signup</h2>
+            <p>Signup to get started with shopping</p>
+            <a href="#">Already a customer? Sign In</a>
+            <!-- <img src="/media/shop/images/Asset 4ldpi.png" alt=""> -->
+        </div>
+
+        <div class="form-section">
+            <form action="#" method="post" class="registration-form">
+
+                <div class="name-section">
+                    <input class="form-input" type="text" name="firstName" id="first-name" , placeholder="First Name">
+                    <input class="form-input" type="text" name="lastName" id="last-name" , placeholder="Last Name">
+                </div>
+
+                <div class="email-section">
+                    <input class="form-input" type="email" name="email" id="email" placeholder="Email">
+                </div>
+
+                <div class="password-section">
+                    <input class="form-input" type="password" name="password" id="password" placeholder="Password">
+                    <input class="form-input" type="password" name="c-password" id="c-password" placeholder="Confirm Password">
+                </div>
+
+                <div class="form-btn">
+                    <button id="submit" type="submit">Signup</button>
+                    <button id="google-signin" type="submit"><i class="fa-brands fa-google"></i>Sign in with Google</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="{% static  'shop/js/registration.js' %}"></script>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,107 @@
+.container {
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.registration-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 20px;
+    width: 50%;
+    padding: 2em 0 2em 2em;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.registration-container .side-info {
+    background: linear-gradient(336deg, rgb(220, 43, 57) 12%, rgb(175, 3, 3) 95%);
+    color: white;
+    padding: 2em;
+    border-radius: 10px;
+    font-family: 'roboto', sans-serif;
+    width: 40%;
+}
+
+.registration-container .side-info img {
+    width: 100%;
+}
+
+.registration-container .side-info a {
+    color: white;
+    font-weight: 500;
+}
+
+.registration-container .side-info p {
+    margin-bottom: 1.5em;
+    font-size: .9rem;
+    color: rgba(255, 255, 255, .8);
+}
+
+.registration-container .side-info a:hover {
+    text-decoration: underline;
+}
+
+.registration-container .side-info h2 {
+    font-size: 2rem;
+    margin-bottom: .5em;
+}
+
+.form-section {
+    padding: 2em;
+}
+
+.form-section .registration-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+}
+
+.name-section,
+.password-section {
+    display: flex;
+    column-gap: 1em;
+}
+
+.form-input {
+    position: relative;
+    padding: 1.4em 1em;
+    outline: none;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.form-btn {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+}
+
+.form-btn button {
+    padding: .8em;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.form-btn #submit {
+    background: linear-gradient(336deg, rgb(220, 43, 57) 12%, rgb(175, 3, 3) 95%);
+    color: white;
+}
+
+.form-btn #google-signin {
+    background: transparent;
+    border: 1px solid rgb(220, 43, 57);
+    color: rgb(220, 43, 57);
+}
+
+.form-btn #google-signin i {
+    padding-right: .8em;
+
+}
