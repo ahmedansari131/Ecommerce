@@ -11,12 +11,10 @@
   position: relative;
   display: flex;
   column-gap: 2em;
-  min-height: 100vh;
 }
 
 .cart-container .cart-product-container {
   display: flex;
-  /* column-gap: 6em; */
   font-family: 'roboto', sans-serif;
   border-bottom: 1px solid rgba(189, 189, 189, .5);
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -25,26 +23,23 @@
   flex: 1;
   background-color: white;
   border-radius: 20px;
-  /* max-height: 50%; */
-  /* height: 100vh; */
 }
 
 .cart-product-container .cart-product-det {
   display: grid;
-  grid-template-columns: .5fr 2fr .2fr;
-  column-gap: 4em;
+  grid-template-columns: .5fr 1fr .5fr;
   padding-bottom: 2.5em;
   padding-top: 2.5em;
   border-bottom: 1px solid rgba(189, 189, 189, .5);
-  height: 15%;
+  overflow: hidden;
+  height: 30vh;
 }
 
-.cart-product-container .cart-product-det:last-child{
+.cart-product-container .cart-product-det:last-child {
   border: none;
 }
 
 .cart-product-container .cart-product-det img {
-  /* width: 100%; */
   height: 40%;
 }
 
@@ -53,14 +48,11 @@
   font-weight: 400;
 }
 
-
 .cart-product-container .cart-product-det .product-action {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
   row-gap: 1em;
-  width: 50%;
-  /* background-color: aqua; */
 }
 
 .cart-product-container .cart-product-det .product-action .product-quantity-btn {
@@ -74,19 +66,19 @@
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
-.cart-product-container .cart-product-det .product-action #subtract {
+.cart-product-container .cart-product-det .product-action .operation-subtract {
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
   cursor: pointer;
 }
 
-.cart-product-container .cart-product-det .product-action #add {
+.cart-product-container .cart-product-det .product-action .operation-add {
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   cursor: pointer;
 }
 
-.cart-product-container .cart-product-det .product-action i{
+.cart-product-container .cart-product-det .product-action i {
   pointer-events: none;
 }
 
@@ -124,8 +116,12 @@
   border: 1px solid rgb(220, 43, 57);
 }
 
+.cart-product-container .cart-product-det .product-price{
+  text-align: end;
+}
+
 .cart-container .cart-price-container {
-  width: 20%;
+  width: 25%;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   padding: 1.5em;
   border-radius: 15px;

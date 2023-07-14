@@ -42,7 +42,7 @@
             </div>
 
             <div class="product-price">
-                <p class="discounted-price">
+                <p class="discounted-price" id="discount-{{value.id}}">
                     {{value.discounted_price}}
                 </p>
 
@@ -63,11 +63,11 @@
 
         <ul class="pricing-breakdowns">
 
-            <li>Price (1 item)
-                <span class="price">Hello</span>
+            <li><span id="item-count"></span>
+                <span class="price" id="og-price"></span>
             </li>
             <li>Discount
-                <span class="discount-price">Hello</span>
+                <span class="discount-price" id="discount-price"></span>
             </li>
             <li>Delivery Charges
                 <span>Free</span>
@@ -76,7 +76,7 @@
         </ul>
 
         <h4 class="final-amount">
-            Total Amount <span class="total-amount">12,333</span>
+            Total Amount <span class="total-amount" id="total-amount">12,333</span>
         </h4>
     </div>
 
