@@ -1,11 +1,8 @@
-// console.log("This is Cart");
-
 // Logic for fixing the price contianer at the top
 window.addEventListener("scroll", function () {
   let cartContainer = document.querySelector(".cart-container");
   let priceContainer = document.querySelector(".cart-price-container");
   let scrollTop = cartContainer.scrollTop || document.documentElement.scrollTop;
-
   if (scrollTop > 0) {
     priceContainer.style.top = scrollTop + "px";
   } else {
@@ -23,80 +20,104 @@ function removeCartItem(item) {
     sendingProductId(url);
     item.parentElement.parentElement.parentElement.remove();
     localStorage.removeItem("product" + prodId);
+    removeItem(prodId);
+    let keyValue = JSON.parse(localStorage.getItem("Quantity"));
+    if (Object.keys(keyValue).length === 0){
+      localStorage.removeItem("Quantity");
+    }
   });
 }
-
 removeBtn.forEach(function (item) {
   removeCartItem(item);
 });
 
-// Logic for the items counter
-let subtractItem = document.querySelectorAll(".operation-subtract");
-let addItem = document.querySelectorAll(".operation-add ");
+// ADDING THE LOGIC INTO ITEM QUANTITY COUNTER
+let addBtn = document.querySelectorAll(".operation-add");
+let subBtn = document.querySelectorAll(".operation-subtract");
+let displayQuantity = document.querySelectorAll(".quantity");
+let allProductCards = document.querySelectorAll(".cart-product-det");
 
-addItem.forEach(function (item) {
-  let counter = localStorage.getItem("product" + item.id) || 1;
-  item.previousElementSibling.innerHTML = counter;
-  item.addEventListener("click", (e) => {
-    let prodId = e.target.id;
-    counter = parseInt(localStorage.getItem("product" + prodId)) || 1;
-    counter += 1;
-    localStorage.setItem("product" + prodId, counter);
-    let cart = localStorage.getItem("product" + prodId);
-    item.previousElementSibling.innerHTML = cart;
+if (localStorage.getItem("Quantity") == null) {
+  var cart = {};
+  displayQuantity.forEach((item) => {
+    item.innerHTML = 1;
+  });
+  fetchProductsInStorage();
+} else {
+  console.log(cart);
+  cart = getCart();
+}
+
+function fetchProductsInStorage() {
+  console.log("in the fucntion");
+  allProductCards.forEach((item) => {
+    if (item) {
+      let prodId = item.id;
+      cart[prodId] = 1;
+      let cartObjToStr = JSON.stringify(cart);
+      localStorage.setItem("Quantity", cartObjToStr);
+      console.log("Chal rha h");
+    }
+  });
+}
+
+addBtn.forEach((item) => {
+  item.addEventListener("click", () => {
+    let prodId = item.id.slice(4);
+    addItem(cart, prodId);
   });
 });
 
-subtractItem.forEach(function (item) {
-  item.addEventListener("click", (e) => {
-    let prodId = e.target.id;
-    let counter = parseInt(localStorage.getItem("product" + prodId)) || 1;
-    if (counter == 0) return;
+subBtn.forEach((item) => {
+  item.addEventListener("click", () => {
+    let prodId = item.id.slice(4);
+    subtractItem(cart, prodId);
+  });
+});
+
+function addItem(cart, product) {
+  if (cart.hasOwnProperty("product " + product)) {
+    cart["product " + product] = cart["product " + product] + 1;
+  } else {
+    cart["product " + product] = 2;
+  }
+  updateCart(cart);
+}
+
+function subtractItem(cart, product) {
+  if (cart.hasOwnProperty("product " + product)) {
+    if (cart["product " + product] === 1) return;
     else {
-      counter -= 1;
+      cart["product " + product] = cart["product " + product] - 1;
     }
-    localStorage.setItem("product" + prodId, counter);
-    let cart = localStorage.getItem("product" + prodId);
-    if (parseInt(cart) == 0) {
-      localStorage.removeItem("product" + prodId);
-      // item.parentElement.parentElement.parentElement.remove();
+  } else {
+    console.log("There is no product");
+  }
+  updateCart(cart);
+}
+
+function updateCart(cart) {
+  let cartObjToStr = JSON.stringify(cart);
+  localStorage.setItem("Quantity", cartObjToStr);
+  getCart();
+}
+
+function getCart() {
+  let fetchCartData;
+  displayQuantity.forEach((item) => {
+    let fetchDisplayId = item.id.slice(8);
+    fetchCartData = JSON.parse(localStorage.getItem("Quantity"));
+    if ("product " + fetchDisplayId in fetchCartData) {
+      item.innerHTML = fetchCartData["product " + fetchDisplayId];
+    } else {
+      item.innerHTML = 1;
     }
-    item.nextElementSibling.innerHTML = cart;
   });
-});
+  return fetchCartData;
+}
 
-// CALCULATING THE PRICE BASED ON THE ITEMS IN THE CART IN REAL TIME
-let discountedPrice = document.querySelectorAll(".discounted-price");
-let ogPrice = document.querySelectorAll(".og-price");
-let totalPrice = document.querySelector(".price");
-let totalAmount = document.querySelector(".total-amount");
-let discountPrice = document.querySelector(".discount-price");
-let productPriceContainer = document.querySelectorAll(".product-price")
-let singleOgPrice = 0;
-let singleDiscountedPrice = 0;
-
-ogPrice.forEach(function (item) {
-  singleOgPrice += parseInt(item.innerHTML);
-});
-console.log("Og Price " + singleOgPrice);
-
-discountedPrice.forEach(function (item) {
-  singleDiscountedPrice += parseInt(item.innerHTML);
-});
-console.log("Discounted Price " + singleDiscountedPrice);
-
-addItem.forEach(function(item){
-  item.addEventListener('click', (e) => {
-    let extractItemCounter = item.previousElementSibling.innerHTML;
-    // priceOfCounter = extractItemCounter * item.pa
-    console.log("This is extracted "+ extractItemCounter);
-  })
-})
-
-
-
-
-
-totalPrice.innerHTML = " &#8377;" + singleOgPrice;
-discountPrice.innerHTML = `<i class="fa-solid fa-minus"></i>  &#8377;${singleOgPrice - singleDiscountedPrice}`;
-totalAmount.innerHTML = " &#8377;" + singleDiscountedPrice;
+function removeItem(product) {
+  let cartData = JSON.parse(localStorage.getItem("Quantity"));
+  delete cartData["product " + product];
+  updateCart(cartData);
+}

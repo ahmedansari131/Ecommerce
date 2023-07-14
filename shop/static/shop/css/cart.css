@@ -16,16 +16,17 @@
 
 .cart-container .cart-product-container {
   display: flex;
-  column-gap: 6em;
+  /* column-gap: 6em; */
   font-family: 'roboto', sans-serif;
   border-bottom: 1px solid rgba(189, 189, 189, .5);
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  padding: 2em 2.6em;
+  padding: 0 2.6em;
   flex-direction: column;
   flex: 1;
   background-color: white;
   border-radius: 20px;
-
+  /* max-height: 50%; */
+  /* height: 100vh; */
 }
 
 .cart-product-container .cart-product-det {
@@ -35,8 +36,7 @@
   padding-bottom: 2.5em;
   padding-top: 2.5em;
   border-bottom: 1px solid rgba(189, 189, 189, .5);
-  height: 30vh;
-  /* background-color: aquamarine; */
+  height: 15%;
 }
 
 .cart-product-container .cart-product-det:last-child{

@@ -15,7 +15,7 @@
 
     <div class="cart-product-container">
         {% for value in products %}
-        <div class="cart-product-det">
+        <div class="cart-product-det" id="product {{value.id}}">
             <img src="/media/{{value.product_image}}" alt="Product image">
 
             <div class="product-action">
@@ -24,12 +24,12 @@
 
                 <div class="product-quantity-btn">
 
-                    <div class="quantity-counter operation-subtract" id="{{value.id}}"><i class="fa-solid fa-minus"></i>
+                    <div class="quantity-counter operation-subtract" id="sub-{{value.id}}"><i class="fa-solid fa-minus"></i>
                     </div>
 
-                    <div class="quantity-counter quantity"></div>
+                    <div class="quantity-counter quantity" id="display-{{value.id}}"></div>
 
-                    <div class="quantity-counter operation-add" id="{{value.id}}"><i class="fa-solid fa-plus add"></i>
+                    <div class="quantity-counter operation-add" id="add-{{value.id}}"><i class="fa-solid fa-plus add"></i>
                     </div>
 
                 </div>
@@ -43,11 +43,11 @@
 
             <div class="product-price">
                 <p class="discounted-price">
-                {{value.discounted_price}}
+                    {{value.discounted_price}}
                 </p>
 
-                <p class="og-price" style="text-decoration:line-through;">
-                    {{value.og_price}}  
+                <p class="og-price" id="og-{{value.id}}" style="text-decoration:line-through;">
+                    {{value.og_price}}
                 </p>
             </div>
 
