@@ -23,6 +23,7 @@
   flex: 1;
   background-color: white;
   border-radius: 20px;
+  position: relative;
 }
 
 .cart-product-container .cart-product-det {
@@ -62,20 +63,24 @@
 
 .cart-product-container .cart-product-det .product-action .quantity-counter {
   padding: .6em 1.3em;
-  background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  background-color: white;  
+  border-top: 1px solid rgba(0, 0, 0, 0.6);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .cart-product-container .cart-product-det .product-action .operation-subtract {
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
   cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.6);
 }
 
 .cart-product-container .cart-product-det .product-action .operation-add {
   border-top-right-radius: 25px;
   border-bottom-right-radius: 25px;
   cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.6);
 }
 
 .cart-product-container .cart-product-det .product-action i {
@@ -83,7 +88,7 @@
 }
 
 .cart-product-container .cart-product-det .product-action .quantity-counter:last-child {
-  border: none;
+  /* border: none; */
 }
 
 .cart-product-container .cart-product-det .cart-btn {
@@ -116,7 +121,7 @@
   border: 1px solid rgb(220, 43, 57);
 }
 
-.cart-product-container .cart-product-det .product-price{
+.cart-product-container .cart-product-det .product-price {
   text-align: end;
 }
 
@@ -128,7 +133,8 @@
   font-family: 'roboto', sans-serif;
   background-color: white;
   height: 100%;
-  position: relative;
+  position: sticky;
+  top: 110px;
 }
 
 .cart-price-container h4 {
@@ -163,4 +169,31 @@
   justify-content: space-between;
   color: rgb(32, 32, 32);
   font-weight: 600;
+}
+
+.order-section {
+  display: flex;
+  justify-content: end;
+  padding: 1em 2em;
+  background-color: white;
+  margin: 0 2em 2em 2em;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0.25em, rgba(0, 0, 0, 0.05) 0px 0.25em 1em;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  width: 1059.4px;
+}
+
+.order-section .place-order {
+  padding: 1em 5em;
+  border-radius: 40px;
+  border: none;
+  background: linear-gradient(336deg, rgb(220, 43, 57) 12%, rgb(175, 3, 3) 95%);
+  color: white;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
 }
