@@ -1,11 +1,3 @@
-// Logic for fixing the price contianer at the top
-window.addEventListener('scroll', (e) => {
-  let priceContainer = document.querySelector(".cart-price-container");
-  if(window.scrollY >= 0){
-    priceContainer.style.top = window.scrollY + "px";
-  }
-});
-
 // ADDING THE LOGIC INTO ITEM QUANTITY COUNTER
 let addBtn = document.querySelectorAll(".operation-add");
 let subBtn = document.querySelectorAll(".operation-subtract");
