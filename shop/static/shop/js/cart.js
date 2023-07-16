@@ -158,3 +158,5 @@ function fetchPrice(cart) {
   console.log("Success");
 }
 fetchPrice(cart);
+
+

@@ -19,5 +19,5 @@ document.addEventListener("click", (e) => {
 window.addEventListener('scroll', function(){
   let navbar = document.querySelector('.nav')
     navbar.style.top = 0 + 'px'
-})
+});
 

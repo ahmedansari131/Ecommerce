@@ -182,9 +182,6 @@ def cart(request):
     for product_id in added_product_id:
         filtered_product = Product.objects.filter(id = product_id)
         product_price = filtered_product.values_list('discounted_price', flat=True)
-
-        print(product_price)
-
         product.extend(filtered_product)
 
     params = {'products': product}
@@ -205,8 +202,25 @@ def cart_url(request, prod_id, rem = None):
         product_id = product.values_list('id', flat=True).first()
         cart_item = CartItem(added_product_id = product_id  )
         cart_item.delete()
-        print("Deleting item")
         return JsonResponse({'message': "Product removed"})
+
+
+
+def checkout(request):
+
+    return render(request, "shop/checkout.html")
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def registration(request):
@@ -237,6 +251,3 @@ def tracking_status(request):
 def search(request):
     return HttpResponse("We are at search")
 
-
-def checkout(request):
-    return HttpResponse("We are at checkout")

@@ -1,0 +1,98 @@
+{% extends 'shop/basic.html' %}
+{% block title %} Your Order | CartX {% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'shop/css/category.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'shop/css/checkout.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block body %}
+
+<div class="checkout-container">
+    <div class="delivery-add">
+        <div class="header">
+            <span class="serial">1</span>
+            <h3>Delivery Address</h3>
+        </div>
+
+        <div class="body">
+            <div class="address-form">
+                <form action="" method="post">{% csrf_token %}
+
+                    <div class="input-section">
+                        <div class="input">
+                            <input type="text" name="name" id="name">
+                            <label for="name">Name</label>
+                        </div>
+                        <div class="input">
+                            <input type="tel" name="mob" id="mob">
+                            <label for="mobile">Mobile number</label>
+                        </div>
+                    </div>
+
+                    <div class="input-section">
+                        <div class="input">
+                            <input type="number" name="pincode" id="pincode" inputmode="numeric">
+                            <label for="pincode">Pincode</label>
+                        </div>
+                        <div class="input">
+                            <input type="text" name="locality" id="locality">
+                            <label for="locality">Locality</label>
+                        </div>
+                    </div>
+
+                    <div class="input-section">
+                        <div class="input">
+                            <textarea name="address" id="address" cols="30" rows="10"></textarea>
+                            <label for="address">Address (Area and Street)</label>
+                        </div>
+                    </div>
+
+                    <div class="input-section">
+                        <div class="input">
+                            <input type="text" name="city" id="city">
+                            <label for="city">City/District/Town</label>
+                        </div>
+                        <div class="input">
+                            <select name="state" id="state">
+                                <option value disabled>--Select State--</option>
+                                <option value="Maharashtra ">Maharashtra</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Delhi">Delhi</option>
+                            </select>
+                            <label for="state">State</label>
+                        </div>
+                    </div>
+
+                    <div class="save-btn">
+                        <button class="save" id="save">Save and deliver here</button>
+                        <button class="cancel" id="cancel">Cancel</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="header m-b">
+        <span class="serial bg-color">2</span>
+        <h3>Order summary</h3>
+    </div>  
+    <div class="header m-b">
+        <span class="serial bg-color">3</span>
+        <h3>Payment options</h3>
+    </div>
+
+</div>
+
+
+
+
+
+
+<script src="{% static '/shop/js/checkout.js' %}"></script>
+{% endblock %}

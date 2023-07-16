@@ -19,4 +19,5 @@ urlpatterns = [
     path("<int:prod_id>/", views.cart_url, name="CartUrl"),
     path("<int:prod_id>/<str:rem>/", views.cart_url, name="CartUrlRem"),
     path("registration/", views.registration, name="Registration"),
+    path("checkout/", views.checkout, name="Checkout"),
 ]
