@@ -66,7 +66,7 @@
   column-gap: 2em;
 }
 
-.action-btn{
+.action-btn {
   padding: .5em 1.5em;
   font-size: 1.2rem;
   border-radius: 25px;
@@ -79,7 +79,7 @@
   border: 1px solid rgb(255, 72, 72);
 }
 
-.action-btn a{
+.action-btn a {
   color: white;
 }
 
@@ -87,7 +87,7 @@
   position: relative;
 }
 
-.dropdown-menu {
+.product-category-dropdown .dropdown-menu {
   position: absolute;
   right: 0;
   top: calc(100% + .25rem);
@@ -321,3 +321,75 @@ input:checked+.slide-container .nav label {
   color: #cacaca;
 }
 
+.registration .dropdown {
+  position: relative;
+}
+
+.registration .dropdown-list {
+  position: absolute;
+  top: calc(100% + .25rem);
+  right: 0;
+  text-align: left;
+  background-color: #f2f2f3;
+  min-width: 15vw;
+  border-radius: 15px;
+}
+
+.dropdown-opacity-0 {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dropdown-hover {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.registration .dropdown-list .signup {
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: .9rem;
+  padding: 1.5em;
+}
+
+.registration .dropdown-list .bold {
+  font-weight: 600;
+  color: black;
+  font-size: 1rem;
+  font-family: 'roboto', sans-serif;
+}
+
+.registration .dropdown-list .list-link-special a:hover {
+  text-decoration: underline;
+}
+
+.registration .normal-links a {
+  font-family: 'roboto', sans-serif;
+  color: black;
+}
+
+.dropdown-list .normal-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-list .normal-links .list-sub-link{
+  padding: 1.2em 1.5em;
+  border-bottom: 1px solid rgba(0, 0, 0,.1);
+}
+
+.dropdown-list .normal-links .list-sub-link:hover{
+  background-color: rgba(0, 0, 0,.1);
+}
+
+.dropdown-list .normal-links .list-sub-link:last-child{
+  border: none;
+  border-radius: 0 0 15px 15px;
+}
+
+.dropdown-list .normal-links .list-sub-link:first-child{
+  border-radius: 15px 15px 0 0 ;
+}

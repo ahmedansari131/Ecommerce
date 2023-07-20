@@ -1,8 +1,9 @@
-import html
-from urllib.parse import quote, unquote
-from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from .models import Product, Display_Product, CartItem
+from django.shortcuts import redirect, render
+from .models import Product, Display_Product, CartItem, Registration, Address
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -177,67 +178,134 @@ def cart(request):
     product = []
     total_price = 0
     added_product = CartItem.objects.all()
-    added_product_id = added_product.values_list('added_product_id', flat=True)
+    added_product_id = added_product.values_list("added_product_id", flat=True)
 
     for product_id in added_product_id:
-        filtered_product = Product.objects.filter(id = product_id)
-        product_price = filtered_product.values_list('discounted_price', flat=True)
+        filtered_product = Product.objects.filter(id=product_id)
+        product_price = filtered_product.values_list("discounted_price", flat=True)
         product.extend(filtered_product)
 
-    params = {'products': product}
+    params = {"products": product}
     return render(request, "shop/cart.html", params)
 
 
-def cart_url(request, prod_id, rem = None):
-
+def cart_url(request, prod_id, rem=None):
     if request.method == "GET" and rem == None:
-        product = Product.objects.filter(id = prod_id)
-        product_id = product.values_list('id', flat=True).first()
-        cart_item = CartItem(added_product_id = product_id  )
+        product = Product.objects.filter(id=prod_id)
+        product_id = product.values_list("id", flat=True).first()
+        cart_item = CartItem(added_product_id=product_id)
         cart_item.save()
-        return JsonResponse({'message': "Product added to cart"})
+        return JsonResponse({"message": "Product added to cart"})
 
     elif request.method == "GET" and rem:
-        product = Product.objects.filter(id = prod_id)
-        product_id = product.values_list('id', flat=True).first()
-        cart_item = CartItem(added_product_id = product_id  )
+        product = Product.objects.filter(id=prod_id)
+        product_id = product.values_list("id", flat=True).first()
+        cart_item = CartItem(added_product_id=product_id)
         cart_item.delete()
-        return JsonResponse({'message': "Product removed"})
+        return JsonResponse({"message": "Product removed"})
 
+
+def handle_signup(request):
+    if request.method == "POST":
+        first_name = request.POST.get("first-name")
+        last_name = request.POST.get("last-name")
+        print(first_name, last_name)
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        c_password = request.POST.get("c-password")
+        if password == c_password:
+            user = User.objects.create_user(email, email, password)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+            return redirect("/shop")
+        else:
+            return HttpResponse("Password does match")
+    else:
+        print("error")
+        return HttpResponse("Error")
+
+
+def handle_login(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        user = authenticate(request, username=email, password=password)
+        print("In handle login")
+        if user is not None:
+            login(request, user)
+            print("Success")
+            return redirect("/shop")
+        else:
+            return HttpResponse("User does not exist")
+    else:
+        return HttpResponse("Error")
+
+
+def handle_logout(request):
+    logout(request)
+    return redirect("/shop")
+
+def user_exists(username):
+    user = User.objects.filter(username = username).exists()
+    return user
+
+# @login_required
+def get_address(request):
+    if request.method == "POST":
+        add_submitted = False
+        name = request.POST.get("name")
+        username = request.user.username
+        print(username)
+        mob = request.POST.get("mobile")
+        pin = request.POST.get("pincode")
+        locality = request.POST.get("locality")
+        address = request.POST.get("address")
+        city = request.POST.get("city")
+        state = request.POST.get("state")
+        if user_exists(username):
+            print("Granted")
+            add_details = Address(name = name, username = username, mobile = mob, pincode = pin, locality = locality, address = address, city = city, state = state)
+            add_details.save()
+            add_submitted = True
+            params = {"submitted": add_submitted}
+            return render(request, "shop/checkout.html", params)
+        else:
+            print("User not found")
+            return redirect("shop/checkout")
+    else:
+        return redirect("shop/checkout")
+
+
+def signup(request):
+    return render(request, "shop/signup.html")
+
+
+def login_page(request):
+    return render(request, "shop/login.html")
 
 
 def checkout(request):
-
-    return render(request, "shop/checkout.html")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def registration(request):
-    return render(request, "shop/registration.html")
-
-
-
-
-
-
-
-
-
-
-
-
-
+    add_dict = {}
+    single_address = {}
+    add_value_list = []
+    i = 0
+    is_username = request.user.username
+    print(is_username)
+    if user_exists(is_username):
+        add = Address.objects.filter(username = is_username)
+        add_value_list = add.values_list('name', 'address', 'mobile', 'pincode')
+        print(add_value_list)
+        for address in add_value_list:
+            single_address[address] = address
+            break
+        print(single_address)
+        if single_address in add_value_list:
+            print("True")
+        else:
+            print("False")
+        params = {"add_data": add_value_list, 'single_address': single_address}
+    return render(request, "shop/checkout.html", params)
 
 
 def contact_us(request):
@@ -250,4 +318,3 @@ def tracking_status(request):
 
 def search(request):
     return HttpResponse("We are at search")
-

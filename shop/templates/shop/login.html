@@ -1,0 +1,43 @@
+{% extends 'shop/basic.html' %}
+{% block title %} Login | CartX {% endblock %}
+{% block head %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'shop/css/category.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'shop/css/registration.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <div class="registration-container">
+
+        <div class="side-info">
+            <h2>Login</h2>
+            <p>Login and get access to elite shopping experience</p>
+        </div>
+
+        <div class="form-section">
+            <form action="/shop/handlelogin/" method="post" class="registration-form" id="form"> {% csrf_token %}
+
+                <div class="email-section">
+                    <input class="form-input" type="email" name="email" id="email" placeholder="Email">
+                </div>
+
+                <div class="password-section">
+                    <input class="form-input" type="password" name="password" id="password" placeholder="Password">
+                </div>
+
+                <div class="form-btn">
+                    <a href="#"><button id="submit" type="submit">Login</button></a>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        {% load static %}
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %} {% endblock %}</title>
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -84,20 +85,60 @@
                     </div>
                 </div>
 
-                <div class="registration">
-                    <button class="login-btn action-btn">
-                        <a href="/shop/registration">Login</a>
-                    </button>
-                </div>
 
                 <div class="add-to-cart">
+                    {% if user.is_authenticated %}
                     <a href="/shop/cart">
                         <button class="cart-btn action-btn">
                             <i class="fas fa-shopping-cart"></i>
                             <span id="cart-rec">Cart</span>
                         </button>
                     </a>
+                    {% else %}
+                    <a href="/shop/login">
+                        <button class="cart-btn action-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cart-rec">Cart</span>
+                        </button>
+                    </a>
+                    {% endif %}
                 </div>
+
+                <div class="registration">
+                    <div class="dropdown">
+                        {% if user.is_authenticated %}
+                        <a href="/shop/login">
+                            <button class="login-btn action-btn">{{user.username}}</button>
+                        </a>
+                        {% else %}
+                        <a href="/shop/login">
+                            <button class="login-btn action-btn">Login</button>
+                        </a>
+                        {% endif %}
+
+                        <div class="dropdown-list dropdown-opacity-0">
+                            {% if not user.is_authenticated %}
+                            <li class="list-link-special signup ">New Customer? <a class="bold"
+                                    href="/shop/signup">Signup</a></li>
+                            {% endif %}
+                            <div class="normal-links">
+                                <a href="/shop/login" class="list-sub-link">
+                                    My Profile
+                                </a>
+                                {% if user.is_authenticated %}
+                                <a href="/shop/login" class="list-sub-link">
+                                    Orders
+                                </a>
+                                <a href="/shop/logout" class="list-sub-link">
+                                    Logout
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -105,7 +146,7 @@
         {% block body %} {% endblock %}
     </div>
 
-    
+
     <script src="{% static 'shop/js/script.js'  %}" type="module"></script>
 
 </body>

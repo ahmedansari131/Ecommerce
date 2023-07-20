@@ -21,3 +21,21 @@ window.addEventListener('scroll', function(){
     navbar.style.top = 0 + 'px'
 });
 
+
+let dropdown = document.querySelector(".login-btn")
+let dropdownList = document.querySelector(".dropdown-list");
+dropdown.addEventListener("mouseover", (e) => {
+  console.log("Hover");
+  dropdownList.classList.add("dropdown-hover");
+});
+
+dropdownList.addEventListener("mouseover", (e) => {
+  console.log("Hover");
+  dropdownList.classList.add("dropdown-hover");
+});
+
+dropdownList.addEventListener("mouseout", (e) => {
+  console.log("Hover");
+  dropdownList.classList.remove("dropdown-hover");
+});
+

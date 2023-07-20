@@ -17,16 +17,16 @@
         <div class="side-info">
             <h2>Signup</h2>
             <p>Signup to get started with shopping</p>
-            <a href="#">Already a customer? Sign In</a>
+            <a href="/shop/login">Already a customer? Sign In</a>
             <!-- <img src="/media/shop/images/Asset 4ldpi.png" alt=""> -->
         </div>
 
         <div class="form-section">
-            <form action="#" method="post" class="registration-form">
+            <form action="/shop/handlesignup/" method="post" class="registration-form" id="form"> {% csrf_token %}
 
                 <div class="name-section">
-                    <input class="form-input" type="text" name="firstName" id="first-name" , placeholder="First Name">
-                    <input class="form-input" type="text" name="lastName" id="last-name" , placeholder="Last Name">
+                    <input class="form-input" type="text" name="first-name" id="first-name" , placeholder="First Name">
+                    <input class="form-input" type="text" name="last-name" id="last-name" , placeholder="Last Name">
                 </div>
 
                 <div class="email-section">
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="form-btn">
-                    <button id="submit" type="submit">Signup</button>
+                    <a href="#"><button id="submit" type="submit">Signup</button></a>
                     <button id="google-signin" type="submit"><i class="fa-brands fa-google"></i>Sign in with Google</button>
                 </div>
 

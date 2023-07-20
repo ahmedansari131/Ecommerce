@@ -34,3 +34,31 @@ class Display_Product(models.Model):
     
 class CartItem(models.Model):
     added_product_id = models.IntegerField(primary_key=True,blank=True, default=0)
+
+
+class Registration(models.Model):
+    email = models.CharField(primary_key=True, max_length=100)
+    first_name = models.CharField(max_length=100, null=True)
+    last_name = models.CharField(max_length=100, null=True)
+    password = models.CharField(max_length=10, null=True)
+
+    def __str__(self):
+        return self.email
+    
+
+class Address(models.Model):
+    add_id = models.AutoField
+    username = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, null=True)
+    mobile = models.IntegerField(null=True)
+    pincode = models.IntegerField(null=True)
+    locality = models.CharField(max_length=20, null=True)
+    address = models.CharField(max_length=200, null=True)
+    city = models.CharField(max_length=20, null=True)
+    state = models.CharField(max_length=20, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+

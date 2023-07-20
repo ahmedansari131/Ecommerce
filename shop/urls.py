@@ -18,6 +18,11 @@ urlpatterns = [
     path("cart/", views.cart, name="Cart"),
     path("<int:prod_id>/", views.cart_url, name="CartUrl"),
     path("<int:prod_id>/<str:rem>/", views.cart_url, name="CartUrlRem"),
-    path("registration/", views.registration, name="Registration"),
+    path("signup/", views.signup, name="Signup"),
+    path("handlesignup/", views.handle_signup, name="HandleSignup"),
+    path("login/", views.login_page, name="Login"),
+    path("handlelogin/", views.handle_login, name="HandleLogin"),
+    path("logout/", views.handle_logout, name="Logout"),
     path("checkout/", views.checkout, name="Checkout"),
+    path("getaddress/", views.get_address, name="Address"),
 ]
