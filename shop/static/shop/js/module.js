@@ -17,7 +17,3 @@ export function sendingProductId(url) {
       console.log(error);
     });
 }
-
-export function cartItemCount(){
-  console.log("Cart");
-}

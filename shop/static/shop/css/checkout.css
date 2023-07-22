@@ -140,7 +140,7 @@
 
 
 .m-b{
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
     border-radius: 15px;
     background: transparent;
     background-color: white;
@@ -162,10 +162,11 @@
     column-gap: 1.5em;
     background-color: white;
     border-bottom: 1px solid rgba(0, 0, 0,.1);
-
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    /* border-radius: 15px; */
 }
 
-.add-flex:last-child{
+.add-flex:last-childs{
     border-radius: 0 0 15px 15px;
 }
 
@@ -206,4 +207,22 @@
     border-radius: 25px;
     margin-top: .5em;
     cursor: pointer;
+}
+
+.new-address{
+    display: flex;
+    align-items: center;
+    column-gap: 1em;
+    padding: 1.5em 4.5em;
+    background-color: white;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    border-radius: 15px;
+    color: rgb(220, 43, 57);
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.new-address p{
+    font-weight: 500;
 }

@@ -13,121 +13,46 @@
 
 <div class="checkout-container">
 
-    {% if add_data %}
-
     <div class="header">
         <span class="serial">1</span>
         <h3>Delivery Address</h3>
     </div>
+
+    <div class="delivery-add">
+    </div>
+    
+    <!-- Single Address is Fetched From DB -->
     <div class="body add-flex current-container">
-        <input type="radio" name="select-address" id="select-address" checked>
-        {% for det in single_address %}
+    </div>
+
+    <!-- Remaining Address is Fetched From DB -->
+    {% for det in add_data %}
+    {% if det in single_address.items %}
+    {% else %}
+    <div class="body add-flex">
+        <input type="radio" name="select-address" id="select-address">
         <div class="personal-info-container">
             <div>
                 <p class="name">{{det.0}}</p>
                 <p class="mobile">{{det.2}}</p>
             </div>
-
             <div class="address-container">
                 <p class="address">{{det.1}} - <b>{{det.3}}</b></p>
-                <!-- <p class="pincode">{{det.3}}</p> -->
             </div>
-            <button class="deliver-here">Deliver Here</button>
-        </div>
-        {% endfor %}
-    </div>
-
-    {% for det in add_data %}
-    {% if det in single_address %}
-    {% else %}
-    <div class="body add-flex">
-        <input type="radio" name="select-address" id="select-address" >
-        <div class="personal-info-container">
-            <p class="name">{{det.0}}</p>
-            <p class="mobile">{{det.2}}</p>
-            <div class="address-container">
-                <p class="address">{{det.1}} - <b>{{det.3}}</b></p>
-                <!-- <p class="pincode">{{det.3}}</p> -->
-            </div>
-            
         </div>
     </div>
     {% endif %}
     {% endfor %}
-    {% else %}
 
-    {% if not submitted %}
-    <div class="delivery-add">
-        <div class="header">
-            <span class="serial">1</span>
-            <h3>Delivery Address</h3>
-        </div>
-
-        <div class="body">
-            <div class="address-form">
-                <form action="/shop/getaddress/" method="post">{% csrf_token %}
-
-                    <div class="input-section">
-                        <div class="input">
-                            <input type="text" name="name" id="name">
-                            <label for="name">Name</label>
-                        </div>
-                        <div class="input">
-                            <input type="tel" name="mobile" id="mob">
-                            <label for="mobile">Mobile number</label>
-                        </div>
-                    </div>
-
-                    <div class="input-section">
-                        <div class="input">
-                            <input type="number" name="pincode" id="pincode" inputmode="numeric">
-                            <label for="pincode">Pincode</label>
-                        </div>
-                        <div class="input">
-                            <input type="text" name="locality" id="locality">
-                            <label for="locality">Locality</label>
-                        </div>
-                    </div>
-
-                    <div class="input-section">
-                        <div class="input">
-                            <textarea name="address" id="address" cols="30" rows="10"></textarea>
-                            <label for="address">Address (Area and Street)</label>
-                        </div>
-                    </div>
-
-                    <div class="input-section">
-                        <div class="input">
-                            <input type="text" name="city" id="city">
-                            <label for="city">City/District/Town</label>
-                        </div>
-                        <div class="input">
-                            <select name="state" id="state">
-                                <option value disabled>--Select State--</option>
-                                <option value="Maharashtra ">Maharashtra</option>
-                                <option value="Uttar Pradesh">Uttar Pradesh</option>
-                                <option value="Tamil Nadu">Tamil Nadu</option>
-                                <option value="Delhi">Delhi</option>
-                            </select>
-                            <label for="state">State</label>
-                        </div>
-                    </div>
-
-                    <div class="save-btn">
-                        <button class="save" id="save">Save and deliver here</button>
-                        <button class="cancel" id="cancel">Cancel {{submitted}}</button>
-                    </div>
-
-                </form>
-            </div>
-            <!-- Order Summary -->
-        </div>
+    {% if single_address %}
+    <div class="new-address">
+        <i class="fa-solid fa-plus"></i>
+        <p>Add a new address</p>
     </div>
-    {% else %}
-    <div class="header m-b">
-        <span class="serial bg-color">1</span>
-        <h3>Delivery Address</h3>
-    </div>
+    {% endif %}
+
+    
+
     <div class="header m-b">
         <span class="serial bg-color">2</span>
         <h3>Order summary</h3>
@@ -136,16 +61,17 @@
         <span class="serial bg-color">3</span>
         <h3>Payment options</h3>
     </div>
-    {% endif %}
-    {% endif %}
 
-
-</div>
-
-
-
+    <!-- <div class="header m-b">
+        <span class="serial bg-color">1</span>
+        <h3>Delivery Address</h3>
+    </div> -->
 
 
 
-<script src="{% static '/shop/js/checkout.js' %}"></script>
-{% endblock %}
+
+
+
+
+    <script src="{% static '/shop/js/checkout.js' %}"></script>
+    {% endblock %}

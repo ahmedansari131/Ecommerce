@@ -1,9 +1,10 @@
+import json
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from .models import Product, Display_Product, CartItem, Registration, Address
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.core import serializers
 
 
 # Create your views here.
@@ -286,26 +287,29 @@ def login_page(request):
 
 
 def checkout(request):
-    add_dict = {}
+    global single_add, add_data
     single_address = {}
+    add_data = []
     add_value_list = []
-    i = 0
     is_username = request.user.username
-    print(is_username)
     if user_exists(is_username):
         add = Address.objects.filter(username = is_username)
         add_value_list = add.values_list('name', 'address', 'mobile', 'pincode')
-        print(add_value_list)
         for address in add_value_list:
-            single_address[address] = address
+            single_address["address"] = address
+            print(single_address)
             break
-        print(single_address)
-        if single_address in add_value_list:
-            print("True")
-        else:
-            print("False")
+        print(add_value_list)
+        print("This is single add ", single_address)
+        for values in add_value_list:
+            add_data.extend(values)
+        single_add = single_address
         params = {"add_data": add_value_list, 'single_address': single_address}
+        
     return render(request, "shop/checkout.html", params)
+
+def get_address_status(request):
+    return JsonResponse({"single_add": single_add, "add_data": add_data})
 
 
 def contact_us(request):
