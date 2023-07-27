@@ -247,14 +247,14 @@ def handle_logout(request):
     logout(request)
     return redirect("/shop")
 
+
 def user_exists(username):
     user = User.objects.filter(username = username).exists()
     return user
 
-# @login_required
+
 def get_address(request):
     if request.method == "POST":
-        add_submitted = False
         name = request.POST.get("name")
         username = request.user.username
         print(username)
@@ -268,9 +268,8 @@ def get_address(request):
             print("Granted")
             add_details = Address(name = name, username = username, mobile = mob, pincode = pin, locality = locality, address = address, city = city, state = state)
             add_details.save()
-            add_submitted = True
-            params = {"submitted": add_submitted}
-            return render(request, "shop/checkout.html", params)
+            request.session['add_submitted'] = True
+            return redirect("/shop/checkout")
         else:
             print("User not found")
             return redirect("shop/checkout")
@@ -287,29 +286,42 @@ def login_page(request):
 
 
 def checkout(request):
-    global single_add, add_data
     single_address = {}
+    remaining_address = {}
     add_data = []
     add_value_list = []
     is_username = request.user.username
     if user_exists(is_username):
         add = Address.objects.filter(username = is_username)
         add_value_list = add.values_list('name', 'address', 'mobile', 'pincode')
-        for address in add_value_list:
-            single_address["address"] = address
-            print(single_address)
-            break
-        print(add_value_list)
-        print("This is single add ", single_address)
+        i = 0
+        # print(len(add_value_list) - 1)
+        for i, address in enumerate(add_value_list):
+            if(i < len(add_value_list) - 1):
+                remaining_address[i] = address
+                i = i + 1
+            else:
+                single_address['address'] = address
+        print("This is remaining address ", remaining_address)
+        print("This is single address", single_address)
         for values in add_value_list:
             add_data.extend(values)
-        single_add = single_address
+        request.session['single_add'] = single_address
+        request.session['remaining_add'] = remaining_address
         params = {"add_data": add_value_list, 'single_address': single_address}
         
     return render(request, "shop/checkout.html", params)
 
+def get_address_details(request):
+    single_add = request.session.get('single_add', {})
+    remaining_add = request.session.get('remaining_add', {})
+    print(single_add)
+    return JsonResponse({"single_add": single_add, "remaining_add": remaining_add})
+
+
 def get_address_status(request):
-    return JsonResponse({"single_add": single_add, "add_data": add_data})
+    add_submitted = request.session.get('add_submitted', False)
+    return JsonResponse({"add_submitted": add_submitted})
 
 
 def contact_us(request):

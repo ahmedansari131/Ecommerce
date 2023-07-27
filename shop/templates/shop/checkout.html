@@ -18,40 +18,29 @@
         <h3>Delivery Address</h3>
     </div>
 
+    <!-- Form -->
+    {% csrf_token %}
     <div class="delivery-add">
     </div>
-    
+
     <!-- Single Address is Fetched From DB -->
     <div class="body add-flex current-container">
     </div>
 
     <!-- Remaining Address is Fetched From DB -->
-    {% for det in add_data %}
-    {% if det in single_address.items %}
-    {% else %}
-    <div class="body add-flex">
-        <input type="radio" name="select-address" id="select-address">
-        <div class="personal-info-container">
-            <div>
-                <p class="name">{{det.0}}</p>
-                <p class="mobile">{{det.2}}</p>
-            </div>
-            <div class="address-container">
-                <p class="address">{{det.1}} - <b>{{det.3}}</b></p>
-            </div>
+    <div class="remaining-container">
+    </div>
+
+    <!-- Add New Address -->
+    {% if single_address %}
+    <div class="new-address">
+        <div class="new-add-btn">
+            <i class="fa-solid fa-plus"></i>
+            <p>Add a new address</p>
         </div>
     </div>
     {% endif %}
-    {% endfor %}
 
-    {% if single_address %}
-    <div class="new-address">
-        <i class="fa-solid fa-plus"></i>
-        <p>Add a new address</p>
-    </div>
-    {% endif %}
-
-    
 
     <div class="header m-b">
         <span class="serial bg-color">2</span>

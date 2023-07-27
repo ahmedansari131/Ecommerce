@@ -25,5 +25,6 @@ urlpatterns = [
     path("logout/", views.handle_logout, name="Logout"),
     path("checkout/", views.checkout, name="Checkout"),
     path("getaddress/", views.get_address, name="Address"),
+    path("getaddressdet/", views.get_address_details, name="AddressDetails"),
     path("getaddressstatus/", views.get_address_status, name="AddressStatus"),
 ]

@@ -210,17 +210,21 @@
 }
 
 .new-address{
-    display: flex;
-    align-items: center;
-    column-gap: 1em;
-    padding: 1.5em 4.5em;
     background-color: white;
     margin-top: 1.5em;
     margin-bottom: 1.5em;
     border-radius: 15px;
     color: rgb(220, 43, 57);
-    cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.new-add-btn{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    column-gap: 1em;
+    padding: 1.5em 4.5em;
+    border-radius: inherit;
 }
 
 .new-address p{
