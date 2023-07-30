@@ -3,7 +3,6 @@ let addBtn = document.querySelectorAll(".operation-add");
 let subBtn = document.querySelectorAll(".operation-subtract");
 let displayQuantity = document.querySelectorAll(".quantity");
 let allProductCards = document.querySelectorAll(".cart-product-det");
-let isRemovedBtn = false;
 
 if (localStorage.getItem("Quantity") == null) {
   var cart = {};
@@ -22,6 +21,11 @@ if (localStorage.getItem("Quantity") == null) {
   });
 }
 
+// Check whether the object is empty or not
+function isEmptyObject(obj) {
+  return Object.keys(obj).length === 0;
+}
+
 // Removing the item by sending the product id to the url
 import { sendingProductId } from "./module.js";
 let removeBtn = document.querySelectorAll(".remove-item-btn");
@@ -30,16 +34,14 @@ function removeCartItem(item) {
     let prodId = e.target.id;
     let url = "/shop/" + prodId + "/rem/";
     sendingProductId(url);
-    isRemovedBtn = true;
-    if (isRemovedBtn) {
-      fetchPrice(cart);
-    }
     item.parentElement.parentElement.parentElement.remove();
     localStorage.removeItem("product" + prodId);
     removeItem(prodId);
     let keyValue = JSON.parse(localStorage.getItem("Quantity"));
-    if (Object.keys(keyValue).length === 0) {
+    console.log(keyValue);
+    if (isEmptyObject(keyValue)) {
       localStorage.removeItem("Quantity");
+      location.reload()
     }
   });
 }
@@ -118,6 +120,7 @@ function removeItem(product) {
   let cartData = JSON.parse(localStorage.getItem("Quantity"));
   delete cartData["product " + product];
   updateCart(cartData);
+  fetchPrice(cartData);
 }
 
 // REALTIME PRICE FETCH AND SHOWING ON THE CARD
@@ -150,13 +153,14 @@ function fetchPrice(cart) {
       totalPrice = ogPriceSum - discountValue;
     }
   }
-  showOgPrice.innerHTML = ogPriceSum;
-  showDiscountPrice.innerHTML = "-" + discountValue;
-  showTotalAmount.innerHTML = totalPrice;
+  showOgPrice.innerHTML = `&#8377;${ogPriceSum}`;
+  showDiscountPrice.innerHTML = `- &#8377;${discountValue}`;
+  showTotalAmount.innerHTML = `&#8377;${totalPrice}`;
   showItemCount.innerHTML = `Price (${itemCount} item)`;
-
-  console.log("Success");
 }
-fetchPrice(cart);
 
+if(!isEmptyObject(cart)){
+  console.log(cart);
+  fetchPrice(cart);
+}
 

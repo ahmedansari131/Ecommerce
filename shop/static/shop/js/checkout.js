@@ -2,6 +2,7 @@ var singleAddStatus = null;
 var remainAddStatus;
 let getAddress = "/shop/getaddressdet/";
 let addressSubmittedStatus = "/shop/getaddressstatus";
+let cartData = "/shop/getcartdata";
 
 function isObjectEmpty(obj) {
   for (let key in obj) {
@@ -38,16 +39,15 @@ fetchData(addressSubmittedStatus).then((data) => {
   } else {
     addressForm.style.display = "flex";
   }
-  console.log(data);
 });
 
-function showAddressForm(a) {
+function showAddressForm(param) {
   let addressForm = document.querySelector(".delivery-add");
   const csrfToken = document.querySelector(
     'input[name="csrfmiddlewaretoken"]'
   ).value;
 
-  a.innerHTML = `
+  param.innerHTML = `
 <div class="body">
     <div class="address-form">
         <form action="/shop/getaddress/" method="post">
@@ -99,15 +99,30 @@ function showAddressForm(a) {
             </div>
 
             <div class="save-btn">
-                <button class="save" id="save">Save and deliver here</button>
-                <button class="cancel" id="cancel">Cancel</button>
+                <button type="submit" class="save" id="save">Save and deliver here</button>
+                <button type="button" class="cancel" id="cancel" onclick="cancelForm()">Cancel</button>
             </div>
-
         </form>
     </div>
     <!-- Order Summary -->
 </div>`;
+}
 
+function cancelForm() {
+  let addressFormContainer = document.querySelector(".new-address").firstElementChild;
+  let newAddressBtnContainer = document.querySelector(".new-address");
+  addressFormContainer.style.display = "none";
+  newAddressBtnContainer.innerHTML = `<div class="new-add-btn" onclick="replaceAddressForm()">
+  <i class="fa-solid fa-plus"></i>
+  <p>Add a new address</p>
+</div>`;
+
+}
+function replaceAddressForm() {
+  let newAddressBtn = document.querySelector(".new-add-btn");
+  let newAddressContainer = document.querySelector(".new-address");
+  newAddressBtn.style.display = "none";
+  showAddressForm(newAddressContainer);
 }
 
 function showAddressContainer(singleAddStatus, remainAddStatus) {
@@ -170,11 +185,32 @@ function showAddressContainer(singleAddStatus, remainAddStatus) {
     addressCurrentContainer.style.display = "none";
     showAddressForm(addressForm);
   }
-
-  let newAddressBtn = document.querySelector(".new-add-btn");
-  let newAddressContainer = document.querySelector(".new-address");
-  console.log(newAddressBtn);
-  newAddressBtn.addEventListener('click', (e) => {
-    showAddressForm(newAddressContainer);
-  });
 }
+
+// Fetching cart data from database for Checkout Page
+var cart = JSON.parse(localStorage.getItem("Quantity"));
+fetchData(cartData).then((data) => {
+  let cartDataObj = data["cart_prod_data"];
+  let ogPriceLabel = document.getElementById("og-price");
+  let discountedPriceLabel = document.getElementById("discount-price");
+  let itemQuantityLabel = document.getElementById("item-count");
+  let totalPriceLabel = document.getElementById("total-amount");
+  let ogPrice = 0;
+  let discountedPriceSum = 0;
+  let itemCounter = 0;
+
+  for (value in cartDataObj) {
+    let itemQuantity = cart["product " + value];
+    ogPrice += itemQuantity * cartDataObj[value][1];
+    discountedPriceSum += cartDataObj[value][2] * itemQuantity;
+    itemCounter += 1;
+  }
+
+  ogPriceLabel.innerHTML = `&#8377;${ogPrice}`;
+  itemQuantityLabel.innerHTML = `Price (${itemCounter} items)`;
+  discountedPriceLabel.innerHTML = `- &#8377;${ogPrice - discountedPriceSum}`;
+  totalPriceLabel.innerHTML = `&#8377;${ogPrice - (ogPrice - discountedPriceSum)}`
+});
+
+
+

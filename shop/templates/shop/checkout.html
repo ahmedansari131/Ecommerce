@@ -10,57 +10,76 @@
 {% endblock %}
 
 {% block body %}
-
-<div class="checkout-container">
-
-    <div class="header">
-        <span class="serial">1</span>
-        <h3>Delivery Address</h3>
-    </div>
-
-    <!-- Form -->
-    {% csrf_token %}
-    <div class="delivery-add">
-    </div>
-
-    <!-- Single Address is Fetched From DB -->
-    <div class="body add-flex current-container">
-    </div>
-
-    <!-- Remaining Address is Fetched From DB -->
-    <div class="remaining-container">
-    </div>
-
-    <!-- Add New Address -->
-    {% if single_address %}
-    <div class="new-address">
-        <div class="new-add-btn">
-            <i class="fa-solid fa-plus"></i>
-            <p>Add a new address</p>
+<div class="container">
+    <div class="checkout-container">
+    
+        <div class="header">
+            <span class="serial">1</span>
+            <h3>Delivery Address</h3>
         </div>
+    
+        <!-- Form Display when there is no Adress in DB -->
+        {% csrf_token %}
+        <div class="delivery-add">
+        </div>
+    
+        <!-- Single Address is Fetched From DB -->
+        <div class="body add-flex current-container">
+        </div>
+    
+        <!-- Remaining Address is Fetched From DB -->
+        <div class="remaining-container">
+        </div>
+    
+        <!-- Add New Address -->
+        {% if single_address %}
+        <div class="new-address">
+            <div class="new-add-btn" onclick="replaceAddressForm()">
+                <i class="fa-solid fa-plus"></i>
+                <p>Add a new address</p>
+            </div>
+        </div>
+        {% endif %}
+    
+        <div class="header m-b">
+            <span class="serial bg-color">2</span>
+            <h3>Order summary</h3>
+        </div>
+        <div class="header m-b">
+            <span class="serial bg-color">3</span>
+            <h3>Payment options</h3>
+        </div>
+    
     </div>
-    {% endif %}
 
+    <!-- Price Container -->
+    <div class="cart-price-container">
+        <h4 class="b-btm">
+            Price Details
+        </h4>
 
-    <div class="header m-b">
-        <span class="serial bg-color">2</span>
-        <h3>Order summary</h3>
+        <ul class="pricing-breakdowns">
+
+            <li><span id="item-count">Price</span>
+                <span class="price" id="og-price">0</span>
+            </li>
+            <li>Discount
+                <span class="discount-price" id="discount-price">0</span>
+            </li>
+            <li>Delivery Charges
+                <span>Free</span>
+            </li>
+
+        </ul>
+
+        <h4 class="final-amount">
+            Total Amount <span class="total-amount" id="total-amount">0</span>
+        </h4>
     </div>
-    <div class="header m-b">
-        <span class="serial bg-color">3</span>
-        <h3>Payment options</h3>
-    </div>
 
-    <!-- <div class="header m-b">
-        <span class="serial bg-color">1</span>
-        <h3>Delivery Address</h3>
-    </div> -->
+</div>
 
 
 
-
-
-
-
-    <script src="{% static '/shop/js/checkout.js' %}"></script>
-    {% endblock %}
+<script src="{% static '/shop/js/checkout.js' %}"></script>
+{% endblock %}

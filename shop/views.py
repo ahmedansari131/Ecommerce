@@ -1,7 +1,7 @@
 import json
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import redirect, render
-from .models import Product, Display_Product, CartItem, Registration, Address
+from django.shortcuts import get_object_or_404, redirect, render
+from .models import Product, Display_Product, CartItem, Address
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.core import serializers
@@ -176,14 +176,16 @@ def single_product(request):
 
 
 def cart(request):
+    user = request.user
+    print(user)
     product = []
-    total_price = 0
-    added_product = CartItem.objects.all()
+    added_product = CartItem.objects.filter(user=user)
+    print(added_product)
     added_product_id = added_product.values_list("added_product_id", flat=True)
+    print(added_product_id)
 
     for product_id in added_product_id:
         filtered_product = Product.objects.filter(id=product_id)
-        product_price = filtered_product.values_list("discounted_price", flat=True)
         product.extend(filtered_product)
 
     params = {"products": product}
@@ -192,9 +194,14 @@ def cart(request):
 
 def cart_url(request, prod_id, rem=None):
     if request.method == "GET" and rem == None:
-        product = Product.objects.filter(id=prod_id)
-        product_id = product.values_list("id", flat=True).first()
-        cart_item = CartItem(added_product_id=product_id)
+        user_email = request.user.username
+        print(user_email)
+        username = get_object_or_404(User, username=user_email)
+        product = get_object_or_404(Product, id=prod_id)
+        print("this is product id", product)
+        product_id = product.id
+        print(product_id)
+        cart_item = CartItem(added_product_id=product_id, user=username)
         cart_item.save()
         return JsonResponse({"message": "Product added to cart"})
 
@@ -249,11 +256,12 @@ def handle_logout(request):
 
 
 def user_exists(username):
-    user = User.objects.filter(username = username).exists()
+    user = User.objects.filter(username=username).exists()
     return user
 
 
 def get_address(request):
+    print("In address")
     if request.method == "POST":
         name = request.POST.get("name")
         username = request.user.username
@@ -264,17 +272,27 @@ def get_address(request):
         address = request.POST.get("address")
         city = request.POST.get("city")
         state = request.POST.get("state")
-        if user_exists(username):
-            print("Granted")
-            add_details = Address(name = name, username = username, mobile = mob, pincode = pin, locality = locality, address = address, city = city, state = state)
-            add_details.save()
-            request.session['add_submitted'] = True
-            return redirect("/shop/checkout")
-        else:
-            print("User not found")
-            return redirect("shop/checkout")
+
+        # Retrieve the user instance using the username
+        user_instance = get_object_or_404(User, username=username)
+
+        # Create the Address object and set the user foreign key
+        add_details = Address(
+            name=name,
+            username=user_instance,
+            mobile=mob,
+            pincode=pin,
+            locality=locality,
+            address=address,
+            city=city,
+            state=state,
+        )
+
+        add_details.save()
+        request.session["add_submitted"] = True
+        return redirect("/shop/checkout")
     else:
-        return redirect("shop/checkout")
+        return redirect("/shop/checkout")
 
 
 def signup(request):
@@ -288,39 +306,65 @@ def login_page(request):
 def checkout(request):
     single_address = {}
     remaining_address = {}
+    cart_prod_list = []
+    cart_ogprice = []
     add_data = []
     add_value_list = []
-    is_username = request.user.username
+    cart_discount = []
+    cart_prod_data = {}
+    item_counter = 0
+
+    is_username = request.user
     if user_exists(is_username):
-        add = Address.objects.filter(username = is_username)
-        add_value_list = add.values_list('name', 'address', 'mobile', 'pincode')
+        add = Address.objects.filter(username=is_username)
+        add_value_list = add.values_list("name", "address", "mobile", "pincode")
         i = 0
-        # print(len(add_value_list) - 1)
         for i, address in enumerate(add_value_list):
-            if(i < len(add_value_list) - 1):
+            if i < len(add_value_list) - 1:
                 remaining_address[i] = address
                 i = i + 1
             else:
-                single_address['address'] = address
-        print("This is remaining address ", remaining_address)
-        print("This is single address", single_address)
+                single_address["address"] = address
         for values in add_value_list:
             add_data.extend(values)
-        request.session['single_add'] = single_address
-        request.session['remaining_add'] = remaining_address
-        params = {"add_data": add_value_list, 'single_address': single_address}
-        
+        request.session["single_add"] = single_address
+        request.session["remaining_add"] = remaining_address
+
+        params = {
+            "add_data": add_value_list,
+            "single_address": single_address,
+            # "cart_prod_data": cart_prod_dict,
+        }
+
     return render(request, "shop/checkout.html", params)
 
+
+def fetch_cart_on_checkout(request):
+    # Getting the products prices to display on the checkout page
+    cart = CartItem.objects.filter(user=request.user)
+    cart_prod_id = cart.values_list("added_product_id", flat=True)
+    print("This is cart id ", cart_prod_id)
+    cart_prod_dict = {}
+    for values in cart_prod_id:
+        card_data = Product.objects.get(id=values)
+        print(card_data)
+        cart_prod_dict[values] = [
+            card_data.product_name,
+            card_data.og_price,
+            card_data.discounted_price,
+        ]
+    print(cart_prod_dict)
+    return JsonResponse({'cart_prod_data': cart_prod_dict})
+
+
 def get_address_details(request):
-    single_add = request.session.get('single_add', {})
-    remaining_add = request.session.get('remaining_add', {})
-    print(single_add)
+    single_add = request.session.get("single_add", {})
+    remaining_add = request.session.get("remaining_add", {})
     return JsonResponse({"single_add": single_add, "remaining_add": remaining_add})
 
 
 def get_address_status(request):
-    add_submitted = request.session.get('add_submitted', False)
+    add_submitted = request.session.get("add_submitted", False)
     return JsonResponse({"add_submitted": add_submitted})
 
 

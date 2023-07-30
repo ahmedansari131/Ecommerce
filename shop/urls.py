@@ -7,7 +7,6 @@ urlpatterns = [
     path("contact/", views.contact_us, name="ContactUs"),
     path("tracker/", views.tracking_status, name="TrackingStatus"),
     path("search/", views.search, name="Search"),
-    path("checkout/", views.checkout, name="Checkout"),
     path("electronic/", views.electronic, name="Electronic"),
     path("fashion/", views.fashion, name="Fashion"  ),
     path("grocery/", views.grocery, name="Grocery"),
@@ -27,4 +26,5 @@ urlpatterns = [
     path("getaddress/", views.get_address, name="Address"),
     path("getaddressdet/", views.get_address_details, name="AddressDetails"),
     path("getaddressstatus/", views.get_address_status, name="AddressStatus"),
+    path("getcartdata/", views.fetch_cart_on_checkout, name="FetchCartOnCheckout"),
 ]

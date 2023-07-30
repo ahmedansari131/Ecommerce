@@ -11,7 +11,7 @@
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="{% static css_file_path %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'shop/css/cart.css' %}">
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'shop/css/cart.css' %}"> -->
     {% block head %}
     {% endblock %}
 </head>
@@ -129,7 +129,7 @@
                                 <a href="/shop/login" class="list-sub-link">
                                     Orders
                                 </a>
-                                <a href="/shop/logout" class="list-sub-link">
+                                <a href="/shop/logout" id="logout" class="list-sub-link">
                                     Logout
                                 </a>
                                 {% endif %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -32,23 +33,15 @@ class Display_Product(models.Model):
     def __str__(self):
         return self.sub_category
     
+
 class CartItem(models.Model):
     added_product_id = models.IntegerField(primary_key=True,blank=True, default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-
-class Registration(models.Model):
-    email = models.CharField(primary_key=True, max_length=100)
-    first_name = models.CharField(max_length=100, null=True)
-    last_name = models.CharField(max_length=100, null=True)
-    password = models.CharField(max_length=10, null=True)
-
-    def __str__(self):
-        return self.email
-    
 
 class Address(models.Model):
-    add_id = models.AutoField
-    username = models.CharField(max_length=100)
+    add_id = models.AutoField(primary_key=True)
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, null=True)
     mobile = models.IntegerField(null=True)
     pincode = models.IntegerField(null=True)

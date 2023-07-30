@@ -12,7 +12,7 @@
 {% block body %}
 
 <div class="cart-container" id="cart-container">
-
+    {% if products %}
     <div class="cart-product-container">
         {% for value in products %}
         <div class="cart-product-det" id="product {{value.id}}">
@@ -77,14 +77,23 @@
         </ul>
 
         <h4 class="final-amount">
-            Total Amount <span class="total-amount" id="total-amount">12,333</span>
+            Total Amount <span class="total-amount" id="total-amount"></span>
         </h4>
     </div>
+    {% else %}
+    <div class="show-msg">
+        <p class="primary-msg">Your cart is empty</p>
+        <p class="secondary-msg">Add items to it now</p>
+        <a href="/shop"><button>Shop Now</button></a>
+    </div>
+    {% endif %}
 </div>
 
+{% if products %}
 <div class="order-section">
     <a href="/shop/checkout"><button class="place-order">Place Order</button></a>
 </div>
+{% endif %}
 
 <script src="{% static '/shop/js/cart.js' %}" type="module"></script>
 

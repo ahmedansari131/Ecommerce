@@ -7,10 +7,10 @@
 .cart-container {
   z-index: 1;
   padding: 2em 2em;
-  display: flex;
   position: relative;
   display: flex;
   column-gap: 2em;
+  justify-content: center;
 }
 
 .cart-container .cart-product-container {
@@ -63,7 +63,7 @@
 
 .cart-product-container .cart-product-det .product-action .quantity-counter {
   padding: .6em 1.3em;
-  background-color: white;  
+  background-color: white;
   border-top: 1px solid rgba(0, 0, 0, 0.6);
   border-bottom: 1px solid rgba(0, 0, 0, 0.6);
   color: rgba(0, 0, 0, 0.8);
@@ -85,10 +85,6 @@
 
 .cart-product-container .cart-product-det .product-action i {
   pointer-events: none;
-}
-
-.cart-product-container .cart-product-det .product-action .quantity-counter:last-child {
-  /* border: none; */
 }
 
 .cart-product-container .cart-product-det .cart-btn {
@@ -186,7 +182,8 @@
   width: 1059.4px;
 }
 
-.order-section .place-order {
+.order-section .place-order,
+.show-msg button {
   padding: 1em 5em;
   border-radius: 40px;
   border: none;
@@ -196,4 +193,35 @@
   text-transform: uppercase;
   font-weight: 600;
   cursor: pointer;
+}
+
+.show-msg {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 1em;
+  background-color: white;
+  padding: 1.5em 2em;
+  border-radius: 15px;
+}
+
+
+.show-msg .primary-msg,
+.show-msg .secondary-msg {
+  font-family: 'roboto', sans-serif;
+}
+
+.primary-msg {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.secondary-msg {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.show-msg button {
+  font-size: 1rem;
+  padding: .8em 4em;
 }
