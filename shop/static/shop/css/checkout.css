@@ -140,7 +140,7 @@
 
 
 .m-b {
-    margin-top: 2em;
+    margin-bottom: 2em;
     /* margin-bottom: 1.5em; */
     border-radius: 15px;
     background: transparent;
@@ -238,7 +238,7 @@
 }
 
 .cart-price-container {
-    width: 25%;
+    width: 33%;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     padding: 1.5em;
     border-radius: 15px;
@@ -284,4 +284,119 @@
     font-weight: 600;
     font-size: 1.1rem;
     text-transform: uppercase;
+}
+
+.df-start {
+    align-items: start;
+    flex-direction: column;
+    row-gap: .4em;
+}
+
+.header-section {
+    display: flex;
+    align-items: center;
+    column-gap: 1.5em;
+}
+
+.header-section i {
+    color: green;
+    font-size: 1.1rem;
+}
+
+.short-info p {
+    font-size: .9rem;
+    color: black;
+    margin-left: 3.9em;
+}
+
+.short-info p span {
+    font-weight: 500;
+}
+
+/* Order Summary */
+.order-content {
+    margin-top: 2em;
+    display: none;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: 0 0 15px 15px;
+
+}
+
+.order-summary {
+    display: grid;
+    grid-template-columns: .5fr 2fr;
+    align-items: center;
+    /* column-gap: 3em; */
+    background-color: white;
+    padding: 2em 4em;
+    border-bottom: 1px solid rgba(189, 189, 189, .5);
+}
+
+.order-summary:last-child {
+    border-bottom: none;
+}
+
+.order-summary img{
+    width: 50%;
+}
+
+.product-detail {
+    display: flex;
+    flex-direction: column;
+    row-gap: .8em;
+}
+
+.product-detail .title {
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 25px;
+    width: 80%;
+}
+
+.product-detail .price {
+    font-size: 1.1rem;
+    font-weight: 500;
+    opacity: .8;
+}
+
+#overline {
+    text-decoration: line-through;
+    color: rgb(125, 125, 125);
+    font-weight: 400;
+    margin-right: 1em;
+}
+
+.product-detail .quantity {
+    padding: .7em 1em;
+    border: 1px solid rgb(220, 43, 57);
+    border-radius: 8px;
+    width: fit-content;
+    color: rgb(220, 43, 57);
+    font-weight: 500;
+}
+
+.continue{
+    padding: 1em 4em;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 15px 15px;
+}
+
+.continue button{
+    padding: .8em 3em;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    background: linear-gradient(336deg, rgb(220, 43, 57) 12%, rgb(175, 3, 3) 95%);
+    color: white;
+    cursor: pointer;
+}
+
+.continue .send-email span{
+    font-weight: 600;
 }

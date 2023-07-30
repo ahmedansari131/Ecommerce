@@ -306,13 +306,9 @@ def login_page(request):
 def checkout(request):
     single_address = {}
     remaining_address = {}
-    cart_prod_list = []
-    cart_ogprice = []
+    cart_prod_dict = {}
     add_data = []
     add_value_list = []
-    cart_discount = []
-    cart_prod_data = {}
-    item_counter = 0
 
     is_username = request.user
     if user_exists(is_username):
@@ -330,10 +326,21 @@ def checkout(request):
         request.session["single_add"] = single_address
         request.session["remaining_add"] = remaining_address
 
+        cart = CartItem.objects.filter(user=request.user)
+        cart_prod_id = cart.values_list("added_product_id", flat=True)
+        for values in cart_prod_id:
+            card_data = Product.objects.get(id=values)
+            cart_prod_dict[values] = [
+                card_data.product_name,
+                card_data.og_price,
+                card_data.discounted_price,
+                card_data.product_image,
+            ]
+        print(cart_prod_dict)
         params = {
             "add_data": add_value_list,
             "single_address": single_address,
-            # "cart_prod_data": cart_prod_dict,
+            "cart_prod_data": cart_prod_dict
         }
 
     return render(request, "shop/checkout.html", params)
@@ -343,18 +350,15 @@ def fetch_cart_on_checkout(request):
     # Getting the products prices to display on the checkout page
     cart = CartItem.objects.filter(user=request.user)
     cart_prod_id = cart.values_list("added_product_id", flat=True)
-    print("This is cart id ", cart_prod_id)
     cart_prod_dict = {}
     for values in cart_prod_id:
         card_data = Product.objects.get(id=values)
-        print(card_data)
         cart_prod_dict[values] = [
             card_data.product_name,
             card_data.og_price,
             card_data.discounted_price,
         ]
-    print(cart_prod_dict)
-    return JsonResponse({'cart_prod_data': cart_prod_dict})
+    return JsonResponse({"cart_prod_data": cart_prod_dict})
 
 
 def get_address_details(request):

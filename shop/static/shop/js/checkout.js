@@ -4,6 +4,7 @@ let getAddress = "/shop/getaddressdet/";
 let addressSubmittedStatus = "/shop/getaddressstatus";
 let cartData = "/shop/getcartdata";
 
+
 function isObjectEmpty(obj) {
   for (let key in obj) {
     if (obj.hasOwnProperty(key)) {
@@ -12,6 +13,7 @@ function isObjectEmpty(obj) {
   }
   return true;
 }
+
 
 function fetchData(url) {
   return fetch(url, {
@@ -40,6 +42,7 @@ fetchData(addressSubmittedStatus).then((data) => {
     addressForm.style.display = "flex";
   }
 });
+
 
 function showAddressForm(param) {
   let addressForm = document.querySelector(".delivery-add");
@@ -108,6 +111,7 @@ function showAddressForm(param) {
 </div>`;
 }
 
+
 function cancelForm() {
   let addressFormContainer = document.querySelector(".new-address").firstElementChild;
   let newAddressBtnContainer = document.querySelector(".new-address");
@@ -116,14 +120,16 @@ function cancelForm() {
   <i class="fa-solid fa-plus"></i>
   <p>Add a new address</p>
 </div>`;
-
 }
+
+
 function replaceAddressForm() {
   let newAddressBtn = document.querySelector(".new-add-btn");
   let newAddressContainer = document.querySelector(".new-address");
   newAddressBtn.style.display = "none";
   showAddressForm(newAddressContainer);
 }
+
 
 function showAddressContainer(singleAddStatus, remainAddStatus) {
   let addressCurrentContainer = document.querySelector(".current-container");
@@ -164,7 +170,7 @@ function showAddressContainer(singleAddStatus, remainAddStatus) {
     <div class="address-container">
         <p class="address">${singleAddStatus.address[1]} - <b>${singleAddStatus.address[3]}</b></p>
     </div>
-    <button class="deliver-here">Deliver Here</button>
+    <button class="deliver-here" id="deliver-btn" onclick="deliverAddressFunc()">Deliver Here</button>
 </div>`;
     }
   } else if (!isObjectEmpty(singleAddStatus)) {
@@ -179,7 +185,7 @@ function showAddressContainer(singleAddStatus, remainAddStatus) {
     <div class="address-container">
         <p class="address">${singleAddStatus.address[1]} - <b>${singleAddStatus.address[3]}</b></p>
     </div>
-    <button class="deliver-here">Deliver Here</button>
+    <button class="deliver-here" id="deliver-btn" onclick="deliverAddressFunc()">Deliver Here</button>
 </div>`;
   } else {
     addressCurrentContainer.style.display = "none";
@@ -187,30 +193,130 @@ function showAddressContainer(singleAddStatus, remainAddStatus) {
   }
 }
 
+
 // Fetching cart data from database for Checkout Page
 var cart = JSON.parse(localStorage.getItem("Quantity"));
-fetchData(cartData).then((data) => {
-  let cartDataObj = data["cart_prod_data"];
-  let ogPriceLabel = document.getElementById("og-price");
-  let discountedPriceLabel = document.getElementById("discount-price");
-  let itemQuantityLabel = document.getElementById("item-count");
-  let totalPriceLabel = document.getElementById("total-amount");
-  let ogPrice = 0;
-  let discountedPriceSum = 0;
-  let itemCounter = 0;
+function displayPrice() {
+  fetchData(cartData).then((data) => {
+    let cartDataObj = data["cart_prod_data"];
+    let ogPriceLabel = document.getElementById("og-price");
+    let discountedPriceLabel = document.getElementById("discount-price");
+    let itemQuantityLabel = document.getElementById("item-count");
+    let totalPriceLabel = document.getElementById("total-amount");
+    let ogPrice = 0;
+    let discountedPriceSum = 0;
+    let itemCounter = 0;
 
-  for (value in cartDataObj) {
-    let itemQuantity = cart["product " + value];
-    ogPrice += itemQuantity * cartDataObj[value][1];
-    discountedPriceSum += cartDataObj[value][2] * itemQuantity;
-    itemCounter += 1;
+    for (value in cartDataObj) {
+      let itemQuantity = cart["product " + value];
+      ogPrice += itemQuantity * cartDataObj[value][1];
+      discountedPriceSum += cartDataObj[value][2] * itemQuantity;
+      itemCounter += 1;
+    }
+
+    ogPriceLabel.innerHTML = `&#8377;${ogPrice}`;
+    itemQuantityLabel.innerHTML = `Price (${itemCounter} items)`;
+    discountedPriceLabel.innerHTML = `- &#8377;${ogPrice - discountedPriceSum}`;
+    totalPriceLabel.innerHTML = `&#8377;${ogPrice - (ogPrice - discountedPriceSum)}`;
+  });
+}
+
+
+function showQuantityInSummary() {
+  let itemQuantity = JSON.parse(localStorage.getItem("Quantity"));
+  for (value in itemQuantity) {
+    let quantity = document.getElementById(`item-${value.split(" ")[1]}`);
+    quantity.innerHTML = `${itemQuantity[`product ${value.split(" ")[1]}`]} items`;
   }
+}
+showQuantityInSummary();
 
-  ogPriceLabel.innerHTML = `&#8377;${ogPrice}`;
-  itemQuantityLabel.innerHTML = `Price (${itemCounter} items)`;
-  discountedPriceLabel.innerHTML = `- &#8377;${ogPrice - discountedPriceSum}`;
-  totalPriceLabel.innerHTML = `&#8377;${ogPrice - (ogPrice - discountedPriceSum)}`
+
+// Deliver button logic
+function deliverAddressFunc() {
+  let confirmedAddressContainer = document.getElementById("deliver-btn").parentElement;
+  const custName = confirmedAddressContainer.querySelector(".name").innerHTML;
+  const custPhone = confirmedAddressContainer.querySelector(".mobile").innerHTML;
+  const custAddress = confirmedAddressContainer.querySelector(".address").innerHTML.split("-")[0];
+  const custCode = confirmedAddressContainer.querySelector("b").innerHTML;
+
+  localStorage.setItem("addressConfirmed", true);
+  addressConfirmed();
+}
+
+
+function orderContinueFunc() {
+  let rawOrderSummary = document.getElementById("raw-order-summary");
+  let continueBtn = document.getElementById("continue");
+  let prod_items = rawOrderSummary.querySelector("p");
+  const products = Object.keys(cart).length;
+  prod_items.innerHTML = `${products} items`;
+  continueBtn.addEventListener('click', (e) => {
+    localStorage.setItem("orderConfirmed", true);
+    orderConfirmed();
+  });
+}
+orderContinueFunc();
+
+
+// By default the confirmed data display will be none
+let confirmedData = document.querySelectorAll(".confirmed");
+let rawAddressContainer = document.getElementById("address-confirmed");
+rawAddressContainer.style.display = "none";
+confirmedData.forEach((item) => {
+  item.style.display = "none";
 });
+
+window.addEventListener("DOMContentLoaded", (e) => {
+  displayPrice();
+  if (JSON.parse(localStorage.getItem("addressConfirmed")) || JSON.parse(localStorage.getItem("orderConfirmed"))) {
+    addressConfirmed();
+    orderConfirmed();
+  }
+});
+
+
+function addressConfirmed() {
+  let currentAddressHeader = document.querySelector(".current-address-header");
+  let currentAddressContainer = document.querySelector(".current-container");
+  let remainingAddressContainer = document.querySelector(".remaining-container");
+  let newAddressBtn = document.querySelector(".new-address");
+  let rawOrderSummary = document.getElementById("raw-order-summary");
+  let orderSummary = document.getElementById("order-content");
+  let rawAddressContainer = document.getElementById("address-confirmed");
+  let confirmedData = document.querySelectorAll(".confirmed");
+
+  rawAddressContainer.style.display = "block";
+  currentAddressContainer.style.display = "none";
+  newAddressBtn.style.display = "none";
+  currentAddressHeader.style.display = "none";
+  rawOrderSummary.style.display = "none";
+  orderSummary.style.display = "block";
+  try {
+    remainingAddressContainer.style.display = "none";
+  } catch (error) { }
+
+  if (JSON.parse(localStorage.getItem("addressConfirmed"))) {
+    confirmedData.forEach((item) => {
+      item.style.display = "block";
+    });
+  }
+}
+
+
+function orderConfirmed() {
+  let orderContent = document.querySelector(".order-content");
+  let rawOrderSummary = document.getElementById("raw-order-summary");
+  let confirmedData = document.querySelectorAll(".confirmed");
+
+  if (JSON.parse(localStorage.getItem("orderConfirmed"))) {
+    orderContent.style.display = "none";
+    rawOrderSummary.style.display = "flex";
+    confirmedData.forEach((item) => {
+      item.style.display = "block";
+    });
+  }
+}
 
 
 
