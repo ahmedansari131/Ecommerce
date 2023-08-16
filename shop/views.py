@@ -214,6 +214,7 @@ def cart_url(request, prod_id, rem=None):
 
 
 def handle_signup(request):
+    print("In handle signup")
     if request.method == "POST":
         first_name = request.POST.get("first-name")
         last_name = request.POST.get("last-name")
@@ -304,27 +305,19 @@ def login_page(request):
 
 
 def checkout(request):
-    single_address = {}
-    remaining_address = {}
+    all_address = {}
     cart_prod_dict = {}
-    add_data = []
     add_value_list = []
 
     is_username = request.user
     if user_exists(is_username):
         add = Address.objects.filter(username=is_username)
         add_value_list = add.values_list("name", "address", "mobile", "pincode")
-        i = 0
+
         for i, address in enumerate(add_value_list):
-            if i < len(add_value_list) - 1:
-                remaining_address[i] = address
-                i = i + 1
-            else:
-                single_address["address"] = address
-        for values in add_value_list:
-            add_data.extend(values)
-        request.session["single_add"] = single_address
-        request.session["remaining_add"] = remaining_address
+           all_address[i] = address
+           i += 1
+        request.session["addresses"] = all_address
 
         cart = CartItem.objects.filter(user=request.user)
         cart_prod_id = cart.values_list("added_product_id", flat=True)
@@ -339,7 +332,7 @@ def checkout(request):
         print(cart_prod_dict)
         params = {
             "add_data": add_value_list,
-            "single_address": single_address,
+            "all_address": all_address,
             "cart_prod_data": cart_prod_dict
         }
 
@@ -362,9 +355,10 @@ def fetch_cart_on_checkout(request):
 
 
 def get_address_details(request):
-    single_add = request.session.get("single_add", {})
-    remaining_add = request.session.get("remaining_add", {})
-    return JsonResponse({"single_add": single_add, "remaining_add": remaining_add})
+    # single_add = request.session.get("single_add", {})
+    all_address = request.session.get("addresses", {})
+    # remaining_add = request.session.get("remaining_add", {})
+    return JsonResponse({"all_address": all_address})
 
 
 def get_address_status(request):

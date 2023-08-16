@@ -12,27 +12,22 @@
 {% block body %}
 <div class="container">
     <div class="checkout-container">
+        <div class="active-container">
+            <div class="header current-address-header">
+                <span class="serial">1</span>
+                <h3>Delivery Address</h3>
+            </div>
 
-        <div class="header current-address-header">
-            <span class="serial">1</span>
-            <h3>Delivery Address</h3>
-        </div>
+            <!-- Form Display when there is no Address in DB -->
+            {% csrf_token %}
+            <div class="delivery-add">
+            </div>
 
-        <!-- Form Display when there is no Adress in DB -->
-        {% csrf_token %}
-        <div class="delivery-add">
-        </div>
-
-        <!-- Single Address is Fetched From DB -->
-        <div class="body add-flex current-container">
-        </div>
-
-        <!-- Remaining Address is Fetched From DB -->
-        <div class="remaining-container">
+            <div class="active-container-body"></div>
         </div>
 
         <!-- Add New Address -->
-        {% if single_address %}
+        {% if all_address %}
         <div class="new-address">
             <div class="new-add-btn" onclick="replaceAddressForm()">
                 <i class="fa-solid fa-plus"></i>
@@ -47,7 +42,7 @@
                 <span class="serial bg-color">1</span>
                 <h3>Delivery Address</h3>
                 <i class="fa-solid fa-check confirmed"></i>
-            </div>
+            </div>  
             <div class="address short-info confirmed">
                 <p><span>Ahmed Ansari </span> This is address - <span>400612</span></p>
             </div>
@@ -66,10 +61,10 @@
         </div>
 
         <div class="order-content" id="order-content">
-            <div class="header current-address-header">
+            <!-- <div class="header current-address-header">
                 <span class="serial">2</span>
                 <h3>Order Summary</h3>
-            </div>
+            </div> -->
 
             {% for value in cart_prod_data.items %}
             <div class="order-summary">
@@ -83,7 +78,7 @@
             {% endfor %}
 
             <div class="continue">
-                <p class="send-email">Order confirmation email will be sent to <span>ahmed@gmail.com</span></p>
+                <p class="send-email">Order confirmation email will be sent to <span>{{request.user}}</span></p>
                 <button id="continue">Continue</button>
             </div>
         </div>

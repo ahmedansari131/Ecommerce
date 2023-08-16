@@ -3,6 +3,7 @@ var remainAddStatus;
 let getAddress = "/shop/getaddressdet/";
 let addressSubmittedStatus = "/shop/getaddressstatus";
 let cartData = "/shop/getcartdata";
+// var activeContainerBody = document.querySelector(".active-container-body")
 
 
 function isObjectEmpty(obj) {
@@ -29,9 +30,8 @@ function fetchData(url) {
 }
 
 fetchData(getAddress).then((data) => {
-  var singleAddStatus = data.single_add;
-  var remainAddStatus = data.remaining_add;
-  showAddressContainer(singleAddStatus, remainAddStatus);
+  var allAddress = data.all_address;
+  showAddressContainer(allAddress);
 });
 
 fetchData(addressSubmittedStatus).then((data) => {
@@ -45,7 +45,6 @@ fetchData(addressSubmittedStatus).then((data) => {
 
 
 function showAddressForm(param) {
-  let addressForm = document.querySelector(".delivery-add");
   const csrfToken = document.querySelector(
     'input[name="csrfmiddlewaretoken"]'
   ).value;
@@ -131,66 +130,88 @@ function replaceAddressForm() {
 }
 
 
-function showAddressContainer(singleAddStatus, remainAddStatus) {
-  let addressCurrentContainer = document.querySelector(".current-container");
-  let addressRemainingContainer = document.querySelector(
-    ".remaining-container"
-  );
-  let addressForm = document.querySelector(".delivery-add");
+function showAddressContainer(allAddress) {
+  let addressId = 1;
+  let activeContainerBody = document.querySelector(".active-container-body");
   const csrfToken = document.querySelector(
     'input[name="csrfmiddlewaretoken"]'
   ).value;
+  let isFirstElem = true;
 
-  if (!isObjectEmpty(remainAddStatus)) {
-    for (let key in remainAddStatus) {
-      addressRemainingContainer.innerHTML += `
-      <div class="body add-flex">
-      <input type="radio" name="select-address" id="select-address">
-      <div class="personal-info-container">
-        <div>
-          <p class="name">${remainAddStatus[key][0]}</p>
-          <p class="mobile">${remainAddStatus[key][2]}</p>
+  if (!isObjectEmpty(allAddress) && !JSON.parse(localStorage.getItem("addressConfirmed"))) {
+    for (let key in allAddress) {
+      let checkedAttribute = isFirstElem ? 'checked' : '';
+      activeContainerBody.innerHTML += `
+      <div class="address-container" id="add-container-${addressId}">
+            <div class="body address-container-body">
+                <input type="radio" name="select-address" class="address-radio-input" id="select-address-${addressId}" ${checkedAttribute}>
+                <div class="personal-info-container" id="add-info-${addressId}">
+                    <div>
+                        <p class="name">${allAddress[key][0]}</p>
+                        <p class="mobile">${allAddress[key][2]}</p>
+                    </div>
+                    <div class="address-section">
+                        <p class="address">${allAddress[key][1]} - <b>${allAddress[key][3]}</b></p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="address-container">
-          <p class="address">${remainAddStatus[key][1]} - <b>${remainAddStatus[key][3]}</b></p>
-        </div>
-      </div>
-      </div>
     `;
-    }
-    if (!isObjectEmpty(singleAddStatus)) {
-      addressCurrentContainer.innerHTML = `
-    <input type="radio" name="select-address" id="select-address" checked>
-    <div class="personal-info-container">
-    <div>
-        <p class="name">${singleAddStatus.address[0]}</p>
-        <p class="mobile">${singleAddStatus.address[2]}</p>
-    </div>
 
-    <div class="address-container">
-        <p class="address">${singleAddStatus.address[1]} - <b>${singleAddStatus.address[3]}</b></p>
-    </div>
-    <button class="deliver-here" id="deliver-btn" onclick="deliverAddressFunc()">Deliver Here</button>
-</div>`;
+      showDeliveryBtn();
+      isFirstElem = false;
+      addressId += 1;
     }
-  } else if (!isObjectEmpty(singleAddStatus)) {
-    addressCurrentContainer.innerHTML = `
-    <input type="radio" name="select-address" id="select-address" checked>
-    <div class="personal-info-container">
-    <div>
-        <p class="name">${singleAddStatus.address[0]}</p>
-        <p class="mobile">${singleAddStatus.address[2]}</p>
-    </div>
-
-    <div class="address-container">
-        <p class="address">${singleAddStatus.address[1]} - <b>${singleAddStatus.address[3]}</b></p>
-    </div>
-    <button class="deliver-here" id="deliver-btn" onclick="deliverAddressFunc()">Deliver Here</button>
-</div>`;
-  } else {
-    addressCurrentContainer.style.display = "none";
-    showAddressForm(addressForm);
   }
+  else if (JSON.parse(localStorage.getItem("addressConfirmed"))) {
+    addressConfirmed()
+  }
+  else {
+    showAddressForm(activeContainerBody);
+  }
+}
+
+
+function showDeliveryBtn() {
+  let firstAddressRadioInput = document.getElementById("select-address-1");
+  if (firstAddressRadioInput.checked) {
+    let deliveryBtnHTML = `<button class="deliver-here" id="deliver-btn" onclick="deliverAddressFunc()">Deliver Here</button>`;
+    let container = document.getElementById("add-info-1");
+    if (!document.querySelector(".deliver-here")) {
+      container.insertAdjacentHTML('beforeend', deliveryBtnHTML);
+    }
+  }
+
+  let addressRadioInput = document.querySelectorAll(".address-radio-input");
+  let itemId;
+  addressRadioInput.forEach((item) => {
+    item.addEventListener('click', (e) => {
+      rmDeliveryBtn()
+      let deliveryBtnHTML = `<button class="deliver-here" id="deliver-btn" onclick="deliverAddressFunc()">Deliver Here</button>`;
+      itemId = e.target.nextElementSibling.id;
+      let addBtnTocontainer = document.getElementById(itemId);
+      if (e.target.checked && !item.nextElementSibling.querySelector(".deliver-here")) {
+        addBtnTocontainer.insertAdjacentHTML('beforeend', deliveryBtnHTML);
+      }
+      localStorage.setItem("isDeliveryBtn", true);
+    })
+  });
+}
+
+
+function rmDeliveryBtn() {
+  let addressRadioInput = document.querySelectorAll(".address-radio-input");
+  addressRadioInput.forEach((item) => {
+    if (!item.checked) {
+      try {
+        let deliveryBtn = document.querySelector(".deliver-here");
+        deliveryBtn.remove();
+      } catch (error) {
+
+      }
+    }
+  })
+
 }
 
 
@@ -277,30 +298,11 @@ window.addEventListener("DOMContentLoaded", (e) => {
 
 
 function addressConfirmed() {
-  let currentAddressHeader = document.querySelector(".current-address-header");
-  let currentAddressContainer = document.querySelector(".current-container");
-  let remainingAddressContainer = document.querySelector(".remaining-container");
-  let newAddressBtn = document.querySelector(".new-address");
-  let rawOrderSummary = document.getElementById("raw-order-summary");
-  let orderSummary = document.getElementById("order-content");
-  let rawAddressContainer = document.getElementById("address-confirmed");
-  let confirmedData = document.querySelectorAll(".confirmed");
-
+  let addAddressContainer = document.querySelector(".new-address").style.display = "none";
   rawAddressContainer.style.display = "block";
-  currentAddressContainer.style.display = "none";
-  newAddressBtn.style.display = "none";
-  currentAddressHeader.style.display = "none";
-  rawOrderSummary.style.display = "none";
-  orderSummary.style.display = "block";
-  try {
-    remainingAddressContainer.style.display = "none";
-  } catch (error) { }
-
-  if (JSON.parse(localStorage.getItem("addressConfirmed"))) {
-    confirmedData.forEach((item) => {
-      item.style.display = "block";
-    });
-  }
+  let activeContainerBody = document.querySelector(".active-container-body");
+  let orderContent = document.querySelector(".order-content").innerHTML;
+  activeContainerBody.innerHTML = orderContent;
 }
 
 
@@ -317,6 +319,3 @@ function orderConfirmed() {
     });
   }
 }
-
-
-
