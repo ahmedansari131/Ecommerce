@@ -3,8 +3,6 @@ var remainAddStatus;
 let getAddress = "/shop/getaddressdet/";
 let addressSubmittedStatus = "/shop/getaddressstatus";
 let cartData = "/shop/getcartdata";
-// var activeContainerBody = document.querySelector(".active-container-body")
-
 
 function isObjectEmpty(obj) {
   for (let key in obj) {
@@ -211,7 +209,6 @@ function rmDeliveryBtn() {
       }
     }
   })
-
 }
 
 
@@ -255,67 +252,116 @@ showQuantityInSummary();
 
 // Deliver button logic
 function deliverAddressFunc() {
+  let confirmedAddressObj = {};
   let confirmedAddressContainer = document.getElementById("deliver-btn").parentElement;
   const custName = confirmedAddressContainer.querySelector(".name").innerHTML;
   const custPhone = confirmedAddressContainer.querySelector(".mobile").innerHTML;
   const custAddress = confirmedAddressContainer.querySelector(".address").innerHTML.split("-")[0];
   const custCode = confirmedAddressContainer.querySelector("b").innerHTML;
 
+  confirmedAddressObj["name"] = custName;
+  confirmedAddressObj["address"] = custAddress;
+  confirmedAddressObj["pin"] = custCode;
+
   localStorage.setItem("addressConfirmed", true);
+  let confirmedAddressData = JSON.stringify(confirmedAddressObj)
+  localStorage.setItem("address", confirmedAddressData);
   addressConfirmed();
+  addressConfirmedHeader();
+  orderSummaryHeader();
 }
-
-
-function orderContinueFunc() {
-  let rawOrderSummary = document.getElementById("raw-order-summary");
-  let continueBtn = document.getElementById("continue");
-  let prod_items = rawOrderSummary.querySelector("p");
-  const products = Object.keys(cart).length;
-  prod_items.innerHTML = `${products} items`;
-  continueBtn.addEventListener('click', (e) => {
-    localStorage.setItem("orderConfirmed", true);
-    orderConfirmed();
-  });
-}
-orderContinueFunc();
-
 
 // By default the confirmed data display will be none
 let confirmedData = document.querySelectorAll(".confirmed");
-let rawAddressContainer = document.getElementById("address-confirmed");
-rawAddressContainer.style.display = "none";
 confirmedData.forEach((item) => {
   item.style.display = "none";
 });
 
 window.addEventListener("DOMContentLoaded", (e) => {
   displayPrice();
-  if (JSON.parse(localStorage.getItem("addressConfirmed")) || JSON.parse(localStorage.getItem("orderConfirmed"))) {
+  if (JSON.parse(localStorage.getItem("addressConfirmed"))) {
     addressConfirmed();
-    orderConfirmed();
   }
+  addressConfirmedHeader();
+  orderSummaryHeader();
 });
 
 
 function addressConfirmed() {
   let addAddressContainer = document.querySelector(".new-address").style.display = "none";
-  rawAddressContainer.style.display = "block";
   let activeContainerBody = document.querySelector(".active-container-body");
   let orderContent = document.querySelector(".order-content").innerHTML;
   activeContainerBody.innerHTML = orderContent;
 }
 
 
-function orderConfirmed() {
-  let orderContent = document.querySelector(".order-content");
-  let rawOrderSummary = document.getElementById("raw-order-summary");
-  let confirmedData = document.querySelectorAll(".confirmed");
-
-  if (JSON.parse(localStorage.getItem("orderConfirmed"))) {
-    orderContent.style.display = "none";
-    rawOrderSummary.style.display = "flex";
-    confirmedData.forEach((item) => {
-      item.style.display = "block";
-    });
+function addressConfirmedHeader() {
+  if (JSON.parse(localStorage.getItem("addressConfirmed"))) {
+    try {
+      document.querySelector(".div").remove();
+      document.getElementById("address-not-confirmed").style.display = "none";
+    }
+    catch (e) { }
+    let addressData = JSON.parse(localStorage.getItem("address"));
+    let header = `<div class="header m-b df-start" id="address-confirmed">
+                      <div class="header-section">
+                          <span class="serial bg-color">1</span>
+                          <h3>Delivery Address</h3>
+                          <i class="fa-solid fa-check confirmed"></i>
+                      </div>  
+                      <div class="address short-info confirmed">
+                          <p><span>${addressData["name"]} -</span> ${addressData["address"]} - <span>${addressData["pin"]}</span></p>
+                      </div>
+                  </div>`;
+    let checkoutContainer = document.querySelector(".checkout-container");
+    let tempDiv = document.createElement('div');
+    tempDiv.innerHTML = header;
+    let headerElement = tempDiv.firstChild;
+    checkoutContainer.insertBefore(headerElement, checkoutContainer.firstChild);
   }
+  else {
+    function showHeader(serialNo, title, id, elem, clss1 = null, clss2 = null) {
+      let header = `<div class="header ${clss1}" id="${id}">
+                        <span class="serial ${clss2}">${serialNo}</span>
+                        <h3>${title}</h3>
+                    </div>`;
+      let activeContainer = document.querySelector(`.${elem}`);
+      let tempDiv = document.createElement('div');
+      tempDiv.innerHTML = header;
+      let headerElement = tempDiv.firstChild;
+      activeContainer.insertBefore(headerElement, activeContainer.firstChild);
+    }
+
+    showHeader(1, "Delivery Address", "address-not-confirmed", "active-container");
+    showHeader(2, "Order Summary", "raw-order-summary", "div", "m-b", "bg-color");
+  }
+}
+
+
+function orderSummaryHeader() {
+  if (JSON.parse(localStorage.getItem("addressConfirmed"))) {
+    let activeContainer = document.querySelector(".active-container");
+    let header = `<div class="header" id="order-summary">
+                      <span class="serial">1</span>
+                      <h3>Delivery Address</h3>
+                  </div>`;
+    let tempDiv = document.createElement('div');
+    tempDiv.innerHTML = header;
+    let headerElement = tempDiv.firstChild;
+    activeContainer.insertBefore(headerElement, activeContainer.firstChild);
+    let serialNo = document.querySelector("#order-summary .serial");
+    let heading = document.querySelector("#order-summary h3");
+    serialNo.innerHTML = "2";
+    heading.innerHTML = "Order Summary";
+  }
+}
+
+
+function orderContinue() {
+  let continueBtn = document.querySelector("#continue");
+  console.log(continueBtn);
+  continueBtn.addEventListener('click', (e) => {
+    console.log("continueBtn");
+    localStorage.setItem("orderContinued", true);
+  });
 }

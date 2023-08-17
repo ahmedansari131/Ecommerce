@@ -13,12 +13,11 @@
 <div class="container">
     <div class="checkout-container">
         <div class="active-container">
-            <div class="header current-address-header">
+            <!-- <div class="header">
                 <span class="serial">1</span>
                 <h3>Delivery Address</h3>
-            </div>
+            </div> -->
 
-            <!-- Form Display when there is no Address in DB -->
             {% csrf_token %}
             <div class="delivery-add">
             </div>
@@ -36,35 +35,7 @@
         </div>
         {% endif %}
 
-        <!-- Delivery Address Confirmed -->
-        <div class="header m-b df-start" id="address-confirmed">
-            <div class="header-section">
-                <span class="serial bg-color">1</span>
-                <h3>Delivery Address</h3>
-                <i class="fa-solid fa-check confirmed"></i>
-            </div>  
-            <div class="address short-info confirmed">
-                <p><span>Ahmed Ansari </span> This is address - <span>400612</span></p>
-            </div>
-        </div>
-
-        <!-- Order Summary -->
-        <div class="header m-b df-start" id="raw-order-summary">
-            <div class="header-section">
-                <span class="serial bg-color">2</span>
-                <h3>Order summary</h3>
-                <i class="fa-solid fa-check confirmed"></i>
-            </div>
-            <div class="order short-info confirmed">
-                <p></p>
-            </div>
-        </div>
-
         <div class="order-content" id="order-content">
-            <!-- <div class="header current-address-header">
-                <span class="serial">2</span>
-                <h3>Order Summary</h3>
-            </div> -->
 
             {% for value in cart_prod_data.items %}
             <div class="order-summary">
@@ -83,7 +54,11 @@
             </div>
         </div>
 
-        <div class="header m-b" id="raw-pay-opt">
+        <div class="div">
+            
+        </div>
+
+        <div class="header m-b h" id="raw-pay-opt">
             <span class="serial bg-color">3</span>
             <h3>Payment options</h3>
         </div>
