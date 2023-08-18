@@ -284,6 +284,9 @@ window.addEventListener("DOMContentLoaded", (e) => {
   }
   addressConfirmedHeader();
   orderSummaryHeader();
+  if(JSON.parse(localStorage.getItem("orderContinued"))){
+    orderContinue();
+  }
 });
 
 
@@ -320,22 +323,24 @@ function addressConfirmedHeader() {
     checkoutContainer.insertBefore(headerElement, checkoutContainer.firstChild);
   }
   else {
-    function showHeader(serialNo, title, id, elem, clss1 = null, clss2 = null) {
-      let header = `<div class="header ${clss1}" id="${id}">
-                        <span class="serial ${clss2}">${serialNo}</span>
-                        <h3>${title}</h3>
-                    </div>`;
-      let activeContainer = document.querySelector(`.${elem}`);
-      let tempDiv = document.createElement('div');
-      tempDiv.innerHTML = header;
-      let headerElement = tempDiv.firstChild;
-      activeContainer.insertBefore(headerElement, activeContainer.firstChild);
-    }
-
     showHeader(1, "Delivery Address", "address-not-confirmed", "active-container");
     showHeader(2, "Order Summary", "raw-order-summary", "div", "m-b", "bg-color");
   }
 }
+
+
+function showHeader(serialNo, title, id, elem, clss1 = null, clss2 = null) {
+  let header = `<div class="header ${clss1}" id="${id}">
+                    <span class="serial ${clss2}">${serialNo}</span>
+                    <h3>${title}</h3>
+                </div>`;
+  let activeContainer = document.querySelector(`.${elem}`);
+  let tempDiv = document.createElement('div');
+  tempDiv.innerHTML = header;
+  let headerElement = tempDiv.firstChild;
+  activeContainer.insertBefore(headerElement, activeContainer.firstChild);
+}
+
 
 
 function orderSummaryHeader() {
@@ -358,10 +363,24 @@ function orderSummaryHeader() {
 
 
 function orderContinue() {
-  let continueBtn = document.querySelector("#continue");
-  console.log(continueBtn);
-  continueBtn.addEventListener('click', (e) => {
-    console.log("continueBtn");
-    localStorage.setItem("orderContinued", true);
-  });
+  localStorage.setItem("orderContinued", true);
+  itemQuantity = JSON.parse(localStorage.getItem("Quantity"));
+  console.log(Object.keys(itemQuantity).length);
+  if (JSON.parse(localStorage.getItem("orderContinued"))) {
+    let header = `<div class="header m-b df-start" id="address-confirmed">
+                      <div class="header-section">
+                          <span class="serial bg-color">2</span>
+                          <h3>Order Summary</h3>
+                          <i class="fa-solid fa-check confirmed"></i>
+                      </div>  
+                      <div class="address short-info confirmed">
+                          <p style="font-weight: bold">${Object.keys(itemQuantity).length} ${Object.keys(itemQuantity).length > 1 ? "items" : "item"}</p>
+                      </div>
+                  </div>`;
+    let checkoutContainer = document.querySelector(".checkout-container");
+    let tempDiv = document.createElement('div');
+    tempDiv.innerHTML = header;
+    let headerElement = tempDiv.firstChild;
+    checkoutContainer.insertBefore(headerElement, checkoutContainer.children[1]);
+  }
 }
