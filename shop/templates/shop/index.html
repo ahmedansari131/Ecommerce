@@ -1,38 +1,8 @@
+
 {% extends 'shop/basic.html' %}
 {% block title %} Home - CartX {% endblock %}
 
 {% block body %}
-<!-- <div class="main-container"> -->
-    <div class="carousel">
-      <ul class="slides">
-        {% for product in products %}
-        <input type="radio" name="radio-buttons" id="img-{{ forloop.counter }}" {% if forloop.first %}checked{% endif %}/>
-        <li class="slide-container">
-          <div class="slide-image">
-            <div class="layer"></div>
-            <img src="/media/{{ product.product_image }}">
-            <div class="main-product">
-              <h2>{{ product.product_name }}</h2>
-              <p class="main-product-desc">
-                {{ product.product_desc }}
-              </p>
-            </div>
-          </div>
-        </li>
-        {% endfor %}
-        <div class="carousel-dots">
-          {% for product in products %}
-          <label for="img-{{ forloop.counter }}" class="carousel-dot" id="img-dot-{{ forloop.counter }}"></label>
-          {% endfor %}
-        </div>
-      </ul>
-      
-    </div>
-  <!-- </div> -->
+
 
 {% endblock %}
-
-
-</body>
-
-</html>

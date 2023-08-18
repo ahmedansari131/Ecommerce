@@ -4,24 +4,39 @@
   box-sizing: border-box;
   text-decoration: none;
   list-style: none;
+  font-family: "roboto", sans-serif;
 }
+
+:root {
+  --primary-color: #D22B2B;
+  --secondary-color: #f2f2f3;
+  --light-color: white;
+  --accent-color: #FFFDD0;
+  --dark-color: #343434;
+  --hover-color: rgb(175, 3, 3);
+  --sm-border-radius: 10px;
+  --md-border-radius: 20px;
+  --lg-border-radius: 30px;
+  --bg-gradient: linear-gradient(348deg, rgba(161, 16, 16, 1) 0%, rgba(210, 43, 43, 1) 100%);
+  --lt-box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  --dk-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
 
 .nav {
   display: flex;
   align-items: center;
   justify-content: space-around;
   padding: 1em;
-  position: absolute;
-  top: 0;
-  z-index: 1;
-  /* background-color: antiquewhite; */
   width: 100vw;
+  position: sticky;
+  background-color: var(--light-color);
+  box-shadow: var(--lt-box-shadow);
 }
 
 .nav .logo a {
   font-size: 2rem;
-  color: #f2f2f3;
-  font-family: "roboto", sans-serif;
+  color: var(--dark-color);
 }
 
 .search-box {
@@ -29,36 +44,55 @@
   align-items: center;
   width: 35%;
   height: 10%;
-  background-color: #f2f2f3;
+  background-color: var(--secondary-color);
   padding-left: 20px;
   padding-right: 0px;
   border-radius: 50px;
+  border: 1px solid var(--secondary-color);
 }
 
 .search-box input {
   flex: 1;
   border: none;
   outline: none;
-  background-color: #f2f2f3;
+  background-color: var(--secondary-color);
   font-size: 1rem;
   padding-left: .3em;
   padding-right: 1em;
   height: 40px;
 }
 
-.search-btn {
+.search-box input::placeholder {
+  font-size: .9rem;
+  opacity: .8;
+}
+
+.primary-btn, .secondary-btn{
   padding: .5em 1em .5em 1em;
   font-size: 1.2rem;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
   border: none;
   outline: none;
-  background: linear-gradient(336deg, rgb(220, 43, 57) 12%, rgb(175, 3, 3) 95%);
-  color: #f2f2f3;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
   cursor: pointer;
-  font-family: 'roboto', sans-serif;
-  border: 1px solid rgb(255, 72, 72);
   border-left: none;
+  transition: background-color .15s;
+}
+
+.secondary-btn{
+  border: 1px solid var(--primary-color);
+  background-color: transparent;
+  border-radius: var(--lg-border-radius);
+  color: var(--primary-color);
+  padding: initial 1.5em;
+}
+
+.search-btn {
+  border-radius: 0 var(--lg-border-radius) var(--lg-border-radius) 0;
+}
+
+.primary-btn:hover{
+  background-color: var(--hover-color);
 }
 
 .nav .action {
@@ -66,7 +100,7 @@
   column-gap: 2em;
 }
 
-.action-btn {
+/* .action-btn {
   padding: .5em 1.5em;
   font-size: 1.2rem;
   border-radius: 25px;
@@ -77,7 +111,7 @@
   background: linear-gradient(336deg, rgb(220, 43, 57) 12%, rgb(175, 3, 3) 95%);
   color: #f2f2f3;
   border: 1px solid rgb(255, 72, 72);
-}
+} */
 
 .action-btn a {
   color: white;
@@ -105,11 +139,6 @@
   opacity: 0;
   pointer-events: none;
   z-index: 2;
-}
-
-.product-category.action-btn:hover,
-.search-btn:hover {
-  background: rgb(175, 3, 3);
 }
 
 .product-category-dropdown.active>.product-category {
@@ -376,20 +405,29 @@ input:checked+.slide-container .nav label {
   flex-direction: column;
 }
 
-.dropdown-list .normal-links .list-sub-link{
+.dropdown-list .normal-links .list-sub-link {
   padding: 1.2em 1.5em;
-  border-bottom: 1px solid rgba(0, 0, 0,.1);
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
 }
 
-.dropdown-list .normal-links .list-sub-link:hover{
-  background-color: rgba(0, 0, 0,.1);
+.dropdown-list .normal-links .list-sub-link:hover {
+  background-color: rgba(0, 0, 0, .1);
 }
 
-.dropdown-list .normal-links .list-sub-link:last-child{
+.dropdown-list .normal-links .list-sub-link:last-child {
   border: none;
   border-radius: 0 0 15px 15px;
 }
 
-.dropdown-list .normal-links .list-sub-link:first-child{
-  border-radius: 15px 15px 0 0 ;
+.dropdown-list .normal-links .list-sub-link:first-child {
+  border-radius: 15px 15px 0 0;
+}
+
+
+
+
+/* Utitlity CSS */
+.plr-2{
+  padding-left: 1.2em;
+  padding-right: 1.2em;
 }
