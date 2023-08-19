@@ -1,8 +1,58 @@
-
 {% extends 'shop/basic.html' %}
 {% block title %} Home - CartX {% endblock %}
-
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static '/shop/css/index.css' %}">
+{% endblock %}
 {% block body %}
+<div class="wrapper">
+    <div class="home-container">
+        <div class="home-img-cards">
+            <div class="top-featured">
+                <h1>Top Featured Products</h1>
+            </div>
+            <div class="prod-display">
+                <div class="circle"></div>
 
+                <div class="prod-ds-info">
 
+                    <div class="prod-ds-title">
+                        <h2>Shoe</h2>
+                    </div>
+                    <div class="prod-ds-desc">
+                        <p>Amazing shoe available here with reasonable price</p>
+                    </div>
+                </div>
+
+                <div class="prod-ds-img">
+                    <img src="/media/shop/images/shoe.jpg" alt="product-image">
+                </div>
+
+            </div>
+
+            <div class="prod-cards-container">
+                <div class="prod-card-item">
+                    <img src="/media/shop/images/shoe.jpg" alt="product-image">
+                    <h3 class="prod-title">Shoe</h3>
+                    <p class="prod-desc">Amazing shoe available here with reasonable price</p>
+                    <button class="primary-btn prod-view-btn">View</button>
+                </div>
+                <div class="prod-card-item">
+                    <img src="/media/shop/images/shirt.jpg" alt="product-image">
+                    <h3 class="prod-title">Shirt</h3>
+                    <p class="prod-desc">Amazing shirt available here with reasonable price</p>
+                    <button class="primary-btn prod-view-btn">View</button>
+                </div>
+                <div class="prod-card-item">
+                    <img src="/media/shop/images/mobile.jpg" alt="product-image">
+                    <h3 class="prod-title">Mobile</h3>
+                    <p class="prod-desc">Amazing mobile available here with reasonable price</p>
+                    <button class="primary-btn prod-view-btn">View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static '/shop/js/index.js' %}"></script>
 {% endblock %}

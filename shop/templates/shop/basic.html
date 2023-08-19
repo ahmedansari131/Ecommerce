@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" type="text/css" href="{% static css_file_path %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/shop/style.css' %}">
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'shop/css/cart.css' %}"> -->
     {% block head %}
     {% endblock %}
@@ -23,19 +23,20 @@
         <div class="nav">
 
             <div class="logo">
-                <a href="/shop">Cart<span style="font-weight: bold; color: #ED2939;">X</span></a>
+                <a href="/shop">Cart<span>X</span></a>
             </div>
 
             <div class="search-box">
                 <input type="text" name="Search" class="search-input" placeholder="Search for products and many more">
-                <button type="submit" class="search-btn primary-btn plr-2"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <button type="submit" class="search-btn primary-btn plr-2"><i
+                        class="fa-solid fa-magnifying-glass"></i></button>
             </div>
 
             <div class="action">
                 <div class="product-category-dropdown" data-dropdown>
-                    <button class="product-category secondary-btn plr-2" data-dropdown-button>
+                    <!-- <button class="product-category secondary-btn plr-2" data-dropdown-button>
                         Product
-                    </button>
+                    </button> -->
                     <div class="dropdown-menu">
 
                         <div class="category-list">
@@ -89,16 +90,16 @@
                 <div class="add-to-cart">
                     {% if user.is_authenticated %}
                     <a href="/shop/cart">
-                        <button class="cart-btn action-btn">
+                        <button class="cart-btn icon-btn">
                             <i class="fas fa-shopping-cart"></i>
-                            <span id="cart-rec">Cart</span>
+                            <span id="cart-rec"></span>
                         </button>
                     </a>
                     {% else %}
                     <a href="/shop/login">
-                        <button class="cart-btn action-btn">
+                        <button class="cart-btn icon-btn">
                             <i class="fas fa-shopping-cart"></i>
-                            <span id="cart-rec">Cart</span>
+                            <span id="cart-rec"></span>
                         </button>
                     </a>
                     {% endif %}
@@ -108,11 +109,11 @@
                     <div class="dropdown">
                         {% if user.is_authenticated %}
                         <a href="/shop/login">
-                            <button class="login-btn action-btn">{{user.username}}</button>
+                            <button class="login-btn">{{user.username}}</button>
                         </a>
                         {% else %}
                         <a href="/shop/login">
-                            <button class="login-btn action-btn">Login</button>
+                            <button class="login-btn icon-btn"><i class="fa-solid fa-user"></i></button>
                         </a>
                         {% endif %}
 
@@ -143,6 +144,14 @@
 
         </div>
 
+        <div class="sub-nav">
+            <ul class="products">
+                <li class="product-item">Mobiles<i class="fa-solid fa-chevron-down"></i></li>
+                <li class="product-item">Electronics<i class="fa-solid fa-chevron-down"></i></li>
+                <li class="product-item">Fashion<i class="fa-solid fa-chevron-down"></i></li>
+                <li class="product-item">Grocery<i class="fa-solid fa-chevron-down"></i></li>
+            </ul>
+        </div>
         {% block body %} {% endblock %}
     </div>
 
@@ -151,4 +160,4 @@
 
 </body>
 
-</html> 
+</html>
